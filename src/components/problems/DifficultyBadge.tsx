@@ -9,7 +9,7 @@ interface DifficultyBadgeProps {
 const styles: Record<Difficulty, string> = {
     Easy: "bg-[#003824] text-[var(--color-tertiary)] border border-[var(--color-tertiary-container)]",
     Medium: "bg-[#2d1a00] text-[#ffb347] border border-[#7a4800]",
-    Hard: "bg-[var(--color-error-container)] text-[var(--color-error)] border border-[#5a0008]",
+    Hard: "bg-[var(--color-error)] text-[var(--color-on-error)] border border-[#5a0008]",
 };
 
 export function DifficultyBadge({ difficulty, className }: DifficultyBadgeProps) {
