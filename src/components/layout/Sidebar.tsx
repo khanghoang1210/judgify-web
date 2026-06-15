@@ -16,12 +16,11 @@ const mainNavItems = [
     { to: "/contests", label: "Contests", icon: Swords },
     { to: "/submissions", label: "Submissions", icon: ClipboardList },
     { to: "/leaderboard", label: "Leaderboard", icon: Trophy },
-];
-
-const bottomNavItems = [
     { to: "/profile", label: "Profile", icon: User },
     { to: "/settings", label: "Settings", icon: Settings },
 ];
+
+
 
 export function Sidebar() {
     return (
@@ -63,26 +62,7 @@ export function Sidebar() {
 
             {/* Bottom Navigation */}
             <div className="border-t border-(--color-outline-variant)">
-                <ul className="space-y-0.5">
-                    {bottomNavItems.map((item) => (
-                        <li key={item.to}>
-                            <NavLink
-                                to={item.to}
-                                className={({ isActive }) =>
-                                    cn(
-                                        "flex items-center gap-3 px-4 py-3 text-sm font-medium transition-colors",
-                                        isActive
-                                            ? "bg-(--color-primary-container)/20 text-(--color-primary) border-r-4"
-                                            : "text-(--color-on-surface-variant) hover:bg-(--color-surface-container) hover:text-(--color-on-surface)"
-                                    )
-                                }
-                            >
-                                <item.icon size={18} />
-                                <span>{item.label}</span>
-                            </NavLink>
-                        </li>
-                    ))}
-                </ul>
+                
             </div>
         </aside>
     );
