@@ -59,8 +59,8 @@ function CompanyTagButton({ active, onClick }: CompanyTagButtonProps) {
             className={cn(
                 "px-3 py-2 text-sm rounded-[var(--radius-md)] border transition-colors font-medium",
                 active
-                    ? "border-[var(--color-primary)] text-[var(--color-primary)] bg-[var(--color-surface-container-high)]"
-                    : "border-[var(--color-outline-variant)] text-[var(--color-on-surface-variant)] bg-[var(--color-surface-container-high)] hover:border-[var(--color-outline)]"
+                    ? "border-(--color-primary) text-(--color-primary) bg-(--color-surface-container-high)"
+                    : "border-(--color-outline-variant) text-(--color-on-surface-variant) bg-(--color-surface-container-high) hover:border-(--color-outline)"
             )}
         >
             Company Tag
@@ -105,7 +105,7 @@ export function ProblemFilters({
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
-                <span className="text-sm text-[var(--color-on-surface-variant)]">Sort by:</span>
+                <span className="text-sm text-(--color-on-surface-variant)">Sort by:</span>
                 <Select
                     value={sort}
                     onValueChange={onSortChange}

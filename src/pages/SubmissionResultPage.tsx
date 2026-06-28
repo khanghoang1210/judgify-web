@@ -8,10 +8,10 @@ export function SubmissionResultPage() {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold font-[family-name:var(--font-geist)] text-[var(--color-on-surface)]">
+                <h1 className="text-3xl font-bold font-(family-name:--font-geist) text-(--color-on-surface)">
                     Submission #{submissionId}
                 </h1>
-                <p className="text-[var(--color-on-surface-variant)] mt-1">
+                <p className="text-(--color-on-surface-variant) mt-1">
                     View submission results
                 </p>
             </div>
@@ -31,7 +31,7 @@ export function SubmissionResultPage() {
                         <CardTitle>Runtime</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-2xl font-bold text-[var(--color-on-surface)]">24ms</p>
+                        <p className="text-2xl font-bold text-(--color-on-surface)">24ms</p>
                     </CardContent>
                 </Card>
 
@@ -40,7 +40,7 @@ export function SubmissionResultPage() {
                         <CardTitle>Memory</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-2xl font-bold text-[var(--color-on-surface)]">14.2MB</p>
+                        <p className="text-2xl font-bold text-(--color-on-surface)">14.2MB</p>
                     </CardContent>
                 </Card>
             </div>
@@ -50,7 +50,7 @@ export function SubmissionResultPage() {
                     <CardTitle>Test Cases</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-[var(--color-on-surface-variant)]">
+                    <p className="text-(--color-on-surface-variant)">
                         Test case results will be displayed here
                     </p>
                 </CardContent>

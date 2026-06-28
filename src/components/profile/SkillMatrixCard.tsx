@@ -40,8 +40,8 @@ export function SkillMatrixCard({ skills }: SkillMatrixCardProps) {
     const n = skills.length;
 
     return (
-        <div className="bg-[var(--color-surface-container)] rounded-xl border border-[var(--color-outline-variant)] p-5">
-            <h3 className="text-base font-semibold font-[family-name:var(--font-geist)] text-[var(--color-on-surface)] mb-2">
+        <div className="bg-(--color-surface-container) rounded-xl border border-(--color-outline-variant) p-5">
+            <h3 className="text-base font-semibold font-(family-name:--font-geist) text-(--color-on-surface) mb-2">
                 Skill Matrix
             </h3>
             <div className="flex justify-center">

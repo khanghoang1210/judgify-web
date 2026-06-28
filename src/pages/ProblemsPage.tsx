@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { Sparkles } from "lucide-react";
 import { problems, problemStats, trendingTags } from "../data/problems";
 import type { Difficulty, ProblemStatus } from "../types/problem";
@@ -10,6 +11,7 @@ import { Button } from "../components/ui/Button";
 const PAGE_SIZE = 50;
 
 export function ProblemsPage() {
+  const navigate = useNavigate();
   const [difficulty, setDifficulty] = useState("");
   const [status, setStatus] = useState("");
   const [topic, setTopic] = useState("");
@@ -50,8 +52,7 @@ export function ProblemsPage() {
 
   function pickRandom() {
     const idx = Math.floor(Math.random() * problems.length);
-    // navigate to that problem — for now just log
-    alert(`Random: ${problems[idx].id}. ${problems[idx].title}`);
+    navigate(`/problems/${problems[idx].id}`);
   }
 
   return (

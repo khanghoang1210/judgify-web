@@ -32,29 +32,29 @@ export function ProblemStatsRow({
             label: "SOLVED PROBLEMS",
             solved: totalSolved,
             total: totalProblems,
-            color: "text-[var(--color-primary)]",
-            barColor: "bg-[var(--color-primary-container)]",
+            color: "text-(--color-primary)",
+            barColor: "bg-(--color-primary-container)",
         },
         {
             label: "EASY SOLVED",
             solved: easySolved,
             total: easyTotal,
-            color: "text-[var(--color-tertiary)]",
-            barColor: "bg-[var(--color-tertiary)]",
+            color: "text-(--color-tertiary)",
+            barColor: "bg-(--color-tertiary)",
         },
         {
             label: "MEDIUM SOLVED",
             solved: mediumSolved,
             total: mediumTotal,
-            color: "text-[var(--color-secondary)]",
-            barColor: "bg-[var(--color-secondary)]",
+            color: "text-(--color-secondary)",
+            barColor: "bg-(--color-secondary)",
         },
         {
             label: "HARD SOLVED",
             solved: hardSolved,
             total: hardTotal,
-            color: "text-[var(--color-error)]",
-            barColor: "bg-[var(--color-error)]",
+            color: "text-(--color-error)",
+            barColor: "bg-(--color-error)",
         },
     ];
 
@@ -65,14 +65,14 @@ export function ProblemStatsRow({
                 return (
                     <div
                         key={stat.label}
-                        className="bg-[var(--color-surface-container)] border border-[var(--color-outline-variant)] rounded-[var(--radius-md)] px-5 py-4"
+                        className="bg-(--color-surface-container) border border-(--color-outline-variant) rounded-[var(--radius-md)] px-5 py-4"
                     >
-                        <p className="text-[10px] font-semibold tracking-widest text-[var(--color-on-surface-variant)] font-[family-name:var(--font-jetbrains-mono)] mb-2">
+                        <p className="text-[10px] font-semibold tracking-widest text-(--color-on-surface-variant) font-(family-name:--font-jetbrains-mono) mb-2">
                             {stat.label}
                         </p>
-                        <p className={`text-2xl font-bold font-[family-name:var(--font-geist)] ${stat.color}`}>
+                        <p className={`text-2xl font-bold font-(family-name:--font-geist) ${stat.color}`}>
                             {stat.solved}{" "}
-                            <span className="text-sm font-normal text-[var(--color-on-surface-variant)]">
+                            <span className="text-sm font-normal text-(--color-on-surface-variant)">
                                 / {stat.total.toLocaleString()}
                             </span>
                         </p>

@@ -11,9 +11,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         const baseStyles = "rounded-[var(--radius-md)] transition-colors";
 
         const variants = {
-            default: "bg-[var(--color-surface-container)]",
-            elevated: "bg-[var(--color-surface-container-high)]",
-            outlined: "bg-[var(--color-surface)] border border-[var(--color-outline-variant)]",
+            default: "bg-(--color-surface-container)",
+            elevated: "bg-(--color-surface-container-high)",
+            outlined: "bg-(--color-surface) border border-(--color-outline-variant)",
         };
 
         return (
@@ -33,7 +33,7 @@ export function CardHeader({ className, ...props }: HTMLAttributes<HTMLDivElemen
 export function CardTitle({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) {
     return (
         <h3
-            className={cn("text-lg font-semibold font-[family-name:var(--font-geist)] text-[var(--color-on-surface)]", className)}
+            className={cn("text-lg font-semibold font-(family-name:--font-geist) text-(--color-on-surface)", className)}
             {...props}
         />
     );

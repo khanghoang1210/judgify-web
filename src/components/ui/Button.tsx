@@ -12,11 +12,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         const baseStyles = "inline-flex items-center justify-center font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
 
         const variants = {
-            primary: "bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)] hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]",
-            secondary: "bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] hover:bg-[var(--color-secondary)] hover:text-[var(--color-on-secondary)]",
-            tertiary: "bg-[var(--color-tertiary-container)] text-[var(--color-on-tertiary-container)] hover:bg-[var(--color-tertiary)] hover:text-[var(--color-on-tertiary)]",
-            outline: "border border-[var(--color-outline)] text-[var(--color-on-surface)] hover:bg-[var(--color-surface-container-high)]",
-            ghost: "text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container)]",
+            primary: "bg-(--color-primary-container) text-(--color-on-primary-container) hover:bg-(--color-primary) hover:text-(--color-on-primary)",
+            secondary: "bg-(--color-secondary-container) text-(--color-on-secondary-container) hover:bg-(--color-secondary) hover:text-(--color-on-secondary)",
+            tertiary: "bg-(--color-tertiary-container) text-(--color-on-tertiary-container) hover:bg-(--color-tertiary) hover:text-(--color-on-tertiary)",
+            outline: "border border-(--color-outline) text-(--color-on-surface) hover:bg-(--color-surface-container-high)",
+            ghost: "text-(--color-on-surface-variant) hover:bg-(--color-surface-container)",
         };
 
         const sizes = {

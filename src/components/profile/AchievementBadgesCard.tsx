@@ -15,8 +15,8 @@ const ICON_MAP = {
 
 export function AchievementBadgesCard({ badges }: AchievementBadgesCardProps) {
     return (
-        <div className="bg-[var(--color-surface-container)] rounded-xl border border-[var(--color-outline-variant)] p-5">
-            <h3 className="text-base font-semibold font-[family-name:var(--font-geist)] text-[var(--color-on-surface)] mb-4">
+        <div className="bg-(--color-surface-container) rounded-xl border border-(--color-outline-variant) p-5">
+            <h3 className="text-base font-semibold font-(family-name:--font-geist) text-(--color-on-surface) mb-4">
                 Achievement Badges
             </h3>
             <div className="flex gap-3 justify-around">
@@ -26,20 +26,20 @@ export function AchievementBadgesCard({ badges }: AchievementBadgesCardProps) {
                         <div key={badge.id} className="flex flex-col items-center gap-2">
                             <div
                                 className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-opacity ${badge.earned
-                                        ? "bg-[var(--color-surface-container-high)] border-[var(--color-primary)]"
-                                        : "bg-[var(--color-surface-container-high)] border-[var(--color-outline-variant)] opacity-40"
+                                        ? "bg-(--color-surface-container-high) border-(--color-primary)"
+                                        : "bg-(--color-surface-container-high) border-(--color-outline-variant) opacity-40"
                                     }`}
                             >
                                 <Icon
                                     size={22}
                                     className={
                                         badge.earned
-                                            ? "text-[var(--color-primary)]"
-                                            : "text-[var(--color-on-surface-variant)]"
+                                            ? "text-(--color-primary)"
+                                            : "text-(--color-on-surface-variant)"
                                     }
                                 />
                             </div>
-                            <span className="text-[10px] text-[var(--color-on-surface-variant)] text-center font-[family-name:var(--font-jetbrains-mono)] uppercase tracking-wide leading-tight max-w-[64px]">
+                            <span className="text-[10px] text-(--color-on-surface-variant) text-center font-(family-name:--font-jetbrains-mono) uppercase tracking-wide leading-tight max-w-[64px]">
                                 {badge.name}
                             </span>
                         </div>

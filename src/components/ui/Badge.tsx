@@ -6,14 +6,14 @@ interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 export function Badge({ variant = "primary", className, children, ...props }: BadgeProps) {
-    const baseStyles = "inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded-[var(--radius-sm)] font-[family-name:var(--font-jetbrains-mono)]";
+    const baseStyles = "inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded-[var(--radius-sm)] font-(family-name:--font-jetbrains-mono)";
 
     const variants = {
-        primary: "bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)]",
-        secondary: "bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)]",
-        tertiary: "bg-[var(--color-tertiary-container)] text-[var(--color-on-tertiary-container)]",
-        error: "bg-[var(--color-error-container)] text-[var(--color-on-error-container)]",
-        outline: "border border-[var(--color-outline)] text-[var(--color-on-surface-variant)]",
+        primary: "bg-(--color-primary-container) text-(--color-on-primary-container)",
+        secondary: "bg-(--color-secondary-container) text-(--color-on-secondary-container)",
+        tertiary: "bg-(--color-tertiary-container) text-(--color-on-tertiary-container)",
+        error: "bg-(--color-error-container) text-(--color-on-error-container)",
+        outline: "border border-(--color-outline) text-(--color-on-surface-variant)",
     };
 
     return (

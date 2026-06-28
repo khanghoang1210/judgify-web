@@ -6,7 +6,7 @@ interface CodingActivityCardProps {
 }
 
 const LEVEL_COLORS: Record<number, string> = {
-  0: "bg-[var(--color-surface-container-high)]",
+  0: "bg-(--color-surface-container-high)",
   1: "#1a4731",
   2: "#1d6a42",
   3: "#239952",
@@ -19,7 +19,7 @@ function getCellStyle(level: number): React.CSSProperties | undefined {
 }
 
 function getCellClass(level: number): string {
-  if (level === 0) return "bg-[var(--color-surface-container-high)]";
+  if (level === 0) return "bg-(--color-surface-container-high)";
   return "";
 }
 
@@ -34,14 +34,14 @@ export function CodingActivityCard({
   }
 
   return (
-    <div className="bg-(--color-surface-container) rounded-xl border border-[var(--color-outline-variant)] p-6">
+    <div className="bg-(--color-surface-container) rounded-xl border border-(--color-outline-variant) p-6">
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-base font-semibold font-[family-name:var(--font-geist)] text-[var(--color-on-surface)]">
+        <h3 className="text-base font-semibold font-(family-name:--font-geist) text-(--color-on-surface)">
           Coding Activity
         </h3>
         {/* Legend */}
         <div className="flex items-center gap-1.5">
-          <span className="text-xs text-[var(--color-on-surface-variant)] mr-1">
+          <span className="text-xs text-(--color-on-surface-variant) mr-1">
             Less
           </span>
           {[0, 1, 2, 3, 4].map((l) => (
@@ -51,7 +51,7 @@ export function CodingActivityCard({
               style={getCellStyle(l)}
             />
           ))}
-          <span className="text-xs text-[var(--color-on-surface-variant)] ml-1">
+          <span className="text-xs text-(--color-on-surface-variant) ml-1">
             More
           </span>
         </div>
@@ -77,7 +77,7 @@ export function CodingActivityCard({
       </div>
 
       {/* Footer */}
-      <div className="mt-4 flex justify-between text-xs text-[var(--color-on-surface-variant)] font-[family-name:var(--font-jetbrains-mono)] tracking-wider">
+      <div className="mt-4 flex justify-between text-xs text-(--color-on-surface-variant) font-(family-name:--font-jetbrains-mono) tracking-wider">
         <span>LAST 365 DAYS</span>
         <span>TOTAL SUBMISSIONS: {totalSubmissions.toLocaleString()}</span>
       </div>

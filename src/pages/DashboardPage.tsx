@@ -1,56 +1,39 @@
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/Card";
+import { dashboardData } from "../data/dashboard";
+import { DashboardHeader } from "../components/dashboard/DashboardHeader";
+import { DailyChallengeCard } from "../components/dashboard/DailyChallengeCard";
+import { ProgressSummaryGrid } from "../components/dashboard/ProgressSummaryGrid";
+import { TopicMasteryCard } from "../components/dashboard/TopicMasteryCard";
+import { RecommendedCard } from "../components/dashboard/RecommendedCard";
+import { RecentSubmissionsCard } from "../components/dashboard/RecentSubmissionsCard";
 
 export function DashboardPage() {
-    return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold font-[family-name:var(--font-geist)] text-[var(--color-on-surface)]">
-                    Dashboard
-                </h1>
-                <p className="text-[var(--color-on-surface-variant)] mt-1">
-                    Welcome to Judgify
-                </p>
-            </div>
+  const {
+    userName,
+    streakDays,
+    challenge,
+    stats,
+    topics,
+    recommended,
+    submissions,
+  } = dashboardData;
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Card variant="elevated">
-                    <CardHeader>
-                        <CardTitle>Problems Solved</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-3xl font-bold text-[var(--color-primary)]">42</p>
-                    </CardContent>
-                </Card>
+  return (
+    <div className="space-y-8">
+      <DashboardHeader userName={userName} streakDays={streakDays} />
 
-                <Card variant="elevated">
-                    <CardHeader>
-                        <CardTitle>Success Rate</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-3xl font-bold text-[var(--color-tertiary)]">78%</p>
-                    </CardContent>
-                </Card>
+      {/* Daily challenge + progress summary */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <DailyChallengeCard challenge={challenge} />
+        <ProgressSummaryGrid stats={stats} />
+      </div>
 
-                <Card variant="elevated">
-                    <CardHeader>
-                        <CardTitle>Ranking</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-3xl font-bold text-[var(--color-secondary)]">#156</p>
-                    </CardContent>
-                </Card>
-            </div>
+      {/* Topic mastery + recommended */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <TopicMasteryCard topics={topics} />
+        <RecommendedCard problems={recommended} />
+      </div>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-[var(--color-on-surface-variant)]">
-                        No recent activity yet
-                    </p>
-                </CardContent>
-            </Card>
-        </div>
-    );
+      <RecentSubmissionsCard submissions={submissions} />
+    </div>
+  );
 }

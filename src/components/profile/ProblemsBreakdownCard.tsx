@@ -37,8 +37,8 @@ export function ProblemsBreakdownCard({ data }: ProblemsBreakdownCardProps) {
     });
 
     return (
-        <div className="bg-[var(--color-surface-container)] rounded-xl border border-[var(--color-outline-variant)] p-5">
-            <h3 className="text-base font-semibold font-[family-name:var(--font-geist)] text-[var(--color-on-surface)] mb-4">
+        <div className="bg-(--color-surface-container) rounded-xl border border-(--color-outline-variant) p-5">
+            <h3 className="text-base font-semibold font-(family-name:--font-geist) text-(--color-on-surface) mb-4">
                 Problems Breakdown
             </h3>
 
@@ -106,11 +106,11 @@ export function ProblemsBreakdownCard({ data }: ProblemsBreakdownCardProps) {
                                 className="w-2.5 h-2.5 rounded-full shrink-0"
                                 style={{ backgroundColor: seg.color }}
                             />
-                            <span className="text-sm text-[var(--color-on-surface-variant)]">
+                            <span className="text-sm text-(--color-on-surface-variant)">
                                 {seg.label}
                             </span>
                         </div>
-                        <span className="text-sm font-medium text-[var(--color-on-surface)] font-[family-name:var(--font-jetbrains-mono)]">
+                        <span className="text-sm font-medium text-(--color-on-surface) font-(family-name:--font-jetbrains-mono)">
                             {data[seg.key].solved}/{data[seg.key].total}
                         </span>
                     </div>

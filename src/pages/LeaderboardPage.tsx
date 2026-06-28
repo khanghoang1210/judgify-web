@@ -29,8 +29,8 @@ export function LeaderboardPage() {
         <GlobalStandingCard data={globalStanding} />
 
         {/* Right stats card */}
-        <div className="bg-[var(--color-surface-container)] rounded-xl border border-[var(--color-outline-variant)] p-6 flex flex-col justify-between gap-4">
-          <h3 className="text-base font-semibold font-[family-name:var(--font-geist)] text-[var(--color-on-surface)]">
+        <div className="bg-(--color-surface-container) rounded-xl border border-(--color-outline-variant) p-6 flex flex-col justify-between gap-4">
+          <h3 className="text-base font-semibold font-(family-name:--font-geist) text-(--color-on-surface)">
             Your Stats
           </h3>
           <div className="grid grid-cols-2 gap-3">
@@ -42,12 +42,12 @@ export function LeaderboardPage() {
             ].map((s) => (
               <div
                 key={s.label}
-                className="bg-[var(--color-surface-container-high)] rounded-lg p-3 border border-[var(--color-outline-variant)]"
+                className="bg-(--color-surface-container-high) rounded-lg p-3 border border-(--color-outline-variant)"
               >
-                <div className="text-lg font-bold font-[family-name:var(--font-geist)] text-[var(--color-on-surface)]">
+                <div className="text-lg font-bold font-(family-name:--font-geist) text-(--color-on-surface)">
                   {s.value}
                 </div>
-                <div className="text-xs text-[var(--color-on-surface-variant)] font-[family-name:var(--font-jetbrains-mono)] mt-0.5 uppercase tracking-wide">
+                <div className="text-xs text-(--color-on-surface-variant) font-(family-name:--font-jetbrains-mono) mt-0.5 uppercase tracking-wide">
                   {s.label}
                 </div>
               </div>

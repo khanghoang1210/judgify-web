@@ -34,26 +34,26 @@ export function ProblemTable({
     }
 
     return (
-        <div className="rounded-[var(--radius-md)] border border-[var(--color-outline-variant)] overflow-hidden">
+        <div className="rounded-[var(--radius-md)] border border-(--color-outline-variant) overflow-hidden">
             <div className="overflow-x-auto">
                 {/* Table header */}
-                <div className="grid grid-cols-[80px_minmax(220px,1fr)_110px_110px_minmax(150px,190px)_120px] min-w-[780px] bg-[var(--color-surface-container-high)] border-b border-[var(--color-outline-variant)]">
-                    <div className="px-3 py-3 text-xs font-semibold text-[var(--color-on-surface-variant)] tracking-wider font-[family-name:var(--font-jetbrains-mono)] text-center">
+                <div className="grid grid-cols-[80px_minmax(220px,1fr)_110px_110px_minmax(150px,190px)_120px] min-w-[780px] bg-(--color-surface-container-high) border-b border-(--color-outline-variant)">
+                    <div className="px-3 py-3 text-xs font-semibold text-(--color-on-surface-variant) tracking-wider font-(family-name:--font-jetbrains-mono) text-center">
                         STATUS
                     </div>
-                    <div className="px-4 py-3 text-xs font-semibold text-[var(--color-on-surface-variant)] tracking-wider font-[family-name:var(--font-jetbrains-mono)]">
+                    <div className="px-4 py-3 text-xs font-semibold text-(--color-on-surface-variant) tracking-wider font-(family-name:--font-jetbrains-mono)">
                         TITLE
                     </div>
-                    <div className="px-4 py-3 text-xs font-semibold text-[var(--color-on-surface-variant)] tracking-wider font-[family-name:var(--font-jetbrains-mono)]">
+                    <div className="px-4 py-3 text-xs font-semibold text-(--color-on-surface-variant) tracking-wider font-(family-name:--font-jetbrains-mono)">
                         DIFFICULTY
                     </div>
-                    <div className="px-4 py-3 text-xs font-semibold text-[var(--color-on-surface-variant)] tracking-wider font-[family-name:var(--font-jetbrains-mono)]">
+                    <div className="px-4 py-3 text-xs font-semibold text-(--color-on-surface-variant) tracking-wider font-(family-name:--font-jetbrains-mono)">
                         ACCEPTANCE
                     </div>
-                    <div className="px-4 py-3 text-xs font-semibold text-[var(--color-on-surface-variant)] tracking-wider font-[family-name:var(--font-jetbrains-mono)]">
+                    <div className="px-4 py-3 text-xs font-semibold text-(--color-on-surface-variant) tracking-wider font-(family-name:--font-jetbrains-mono)">
                         TAGS
                     </div>
-                    <div className="px-4 py-3 text-xs font-semibold text-[var(--color-on-surface-variant)] tracking-wider font-[family-name:var(--font-jetbrains-mono)] text-right">
+                    <div className="px-4 py-3 text-xs font-semibold text-(--color-on-surface-variant) tracking-wider font-(family-name:--font-jetbrains-mono) text-right">
                         LAST SUBMITTED
                     </div>
                 </div>
@@ -62,7 +62,7 @@ export function ProblemTable({
                 {problems.map((problem, idx) => (
                     <div
                         key={problem.id}
-                        className={`grid grid-cols-[80px_minmax(220px,1fr)_110px_110px_minmax(150px,190px)_120px] min-w-[780px] items-center border-b border-[var(--color-outline-variant)] last:border-b-0 hover:bg-[var(--color-surface-container-high)] transition-colors ${idx % 2 === 0 ? "bg-[var(--color-surface-container)]" : "bg-[var(--color-surface-container-low)]"
+                        className={`grid grid-cols-[80px_minmax(220px,1fr)_110px_110px_minmax(150px,190px)_120px] min-w-[780px] items-center border-b border-(--color-outline-variant) last:border-b-0 hover:bg-(--color-surface-container-high) transition-colors ${idx % 2 === 0 ? "bg-(--color-surface-container)" : "bg-(--color-surface-container-low)"
                             }`}
                     >
                         {/* Status */}
@@ -74,7 +74,7 @@ export function ProblemTable({
                         <div className="px-4 py-5">
                             <Link
                                 to={`/problems/${problem.id}`}
-                                className="text-sm font-medium text-[var(--color-on-surface)] hover:text-[var(--color-primary)] transition-colors"
+                                className="text-sm font-medium text-(--color-on-surface) hover:text-(--color-primary) transition-colors"
                             >
                                 {problem.id}. {problem.title}
                             </Link>
@@ -87,7 +87,7 @@ export function ProblemTable({
 
                         {/* Acceptance */}
                         <div className="px-4 py-5">
-                            <span className="text-sm text-[var(--color-on-surface-variant)] font-[family-name:var(--font-jetbrains-mono)]">
+                            <span className="text-sm text-(--color-on-surface-variant) font-(family-name:--font-jetbrains-mono)">
                                 {problem.acceptance}%
                             </span>
                         </div>
@@ -97,7 +97,7 @@ export function ProblemTable({
                             {problem.tags.map((tag) => (
                                 <span
                                     key={tag}
-                                    className="inline-flex items-center px-2 py-0.5 text-xs rounded bg-[var(--color-surface-container-high)] text-[var(--color-on-surface-variant)] border border-[var(--color-outline-variant)] font-[family-name:var(--font-jetbrains-mono)] whitespace-nowrap"
+                                    className="inline-flex items-center px-2 py-0.5 text-xs rounded bg-(--color-surface-container-high) text-(--color-on-surface-variant) border border-(--color-outline-variant) font-(family-name:--font-jetbrains-mono) whitespace-nowrap"
                                 >
                                     {tag}
                                 </span>
@@ -106,7 +106,7 @@ export function ProblemTable({
 
                         {/* Last Submitted */}
                         <div className="px-4 py-5 text-right">
-                            <span className="text-sm text-[var(--color-on-surface-variant)] whitespace-nowrap">
+                            <span className="text-sm text-(--color-on-surface-variant) whitespace-nowrap">
                                 {problem.lastSubmitted ?? "—"}
                             </span>
                         </div>
@@ -115,7 +115,7 @@ export function ProblemTable({
 
                 {/* Pagination footer */}
             </div>
-            <div className="flex items-center justify-between px-4 py-3 bg-(--color-surface-container) border-t border-[var(--color-outline-variant)]">
+            <div className="flex items-center justify-between px-4 py-3 bg-(--color-surface-container) border-t border-(--color-outline-variant)">
                 <span className="text-sm text-(--color-on-surface-variant)">
                     Showing {start}–{end} of {totalCount.toLocaleString()} problems
                 </span>
@@ -123,13 +123,13 @@ export function ProblemTable({
                     <button
                         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
                         disabled={currentPage === 1}
-                        className="w-8 h-8 flex items-center justify-center rounded text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-high)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                        className="w-8 h-8 flex items-center justify-center rounded text-(--color-on-surface-variant) hover:bg-(--color-surface-container-high) disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     >
                         ‹
                     </button>
                     {pageNumbers.map((p, i) =>
                         p === "..." ? (
-                            <span key={i} className="w-8 h-8 flex items-center justify-center text-[var(--color-on-surface-variant)] text-sm">
+                            <span key={i} className="w-8 h-8 flex items-center justify-center text-(--color-on-surface-variant) text-sm">
                                 ...
                             </span>
                         ) : (
@@ -148,7 +148,7 @@ export function ProblemTable({
                     <button
                         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
                         disabled={currentPage === totalPages}
-                        className="w-8 h-8 flex items-center justify-center rounded text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-high)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                        className="w-8 h-8 flex items-center justify-center rounded text-(--color-on-surface-variant) hover:bg-(--color-surface-container-high) disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     >
                         ›
                     </button>
