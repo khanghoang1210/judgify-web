@@ -46,8 +46,8 @@ export function ProblemStatsRow({
             label: "MEDIUM SOLVED",
             solved: mediumSolved,
             total: mediumTotal,
-            color: "text-[#ffb347]",
-            barColor: "bg-[#ffb347]",
+            color: "text-[var(--color-secondary)]",
+            barColor: "bg-[var(--color-secondary)]",
         },
         {
             label: "HARD SOLVED",
@@ -77,7 +77,7 @@ export function ProblemStatsRow({
                             </span>
                         </p>
                         {/* Progress bar */}
-                        <div className="mt-3 h-1 bg-[var(--color-surface-container-high)] rounded-full overflow-hidden">
+                        <div className="mt-3 h-1 bg-(--color-surface-container-high) rounded-full overflow-hidden">
                             <div
                                 className={`h-full rounded-full ${stat.barColor}`}
                                 style={{ width: `${pct}%` }}

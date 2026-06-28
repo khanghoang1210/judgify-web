@@ -7,10 +7,10 @@ interface StatusIconProps {
 
 export function StatusIcon({ status }: StatusIconProps) {
     if (status === "solved") {
-        return <CheckCircle2 size={18} className="text-[var(--color-tertiary)]" />;
+        return <CheckCircle2 size={18} className="text-(--color-tertiary)" />;
     }
     if (status === "attempted") {
-        return <Clock size={18} className="text-[#ffb347]" />;
+        return <Clock size={18} className="text-(--color-secondary)" />;
     }
-    return <Circle size={18} className="text-[var(--color-outline)]" />;
+    return <Circle size={18} className="text-(--color-outline)" />;
 }

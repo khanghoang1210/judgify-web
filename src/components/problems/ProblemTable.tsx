@@ -115,8 +115,8 @@ export function ProblemTable({
 
                 {/* Pagination footer */}
             </div>
-            <div className="flex items-center justify-between px-4 py-3 bg-[var(--color-surface-container)] border-t border-[var(--color-outline-variant)]">
-                <span className="text-sm text-[var(--color-on-surface-variant)]">
+            <div className="flex items-center justify-between px-4 py-3 bg-(--color-surface-container) border-t border-[var(--color-outline-variant)]">
+                <span className="text-sm text-(--color-on-surface-variant)">
                     Showing {start}–{end} of {totalCount.toLocaleString()} problems
                 </span>
                 <div className="flex items-center gap-1">
@@ -137,8 +137,8 @@ export function ProblemTable({
                                 key={p}
                                 onClick={() => onPageChange(p as number)}
                                 className={`w-8 h-8 flex items-center justify-center rounded text-sm transition-colors ${currentPage === p
-                                    ? "bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)] font-semibold"
-                                    : "text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-high)]"
+                                    ? "bg-(--color-primary-container) text-(--color-on-primary-container) font-semibold"
+                                    : "text-(--color-on-surface-variant) hover:bg-(--color-surface-container-high)"
                                     }`}
                             >
                                 {p}
