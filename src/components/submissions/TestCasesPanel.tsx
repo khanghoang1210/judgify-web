@@ -32,7 +32,7 @@ export function TestCasesPanel({ submission }: TestCasesPanelProps) {
             <div
               key={idx}
               title={`Case ${idx + 1}: ${passed ? "Passed" : "Failed"}`}
-              className={`aspect-square rounded-[2px] transition-transform hover:scale-110 cursor-help ${
+              className={`aspect-square rounded-xs transition-transform hover:scale-110 cursor-help ${
                 passed
                   ? "bg-tertiary/20 border border-tertiary/40"
                   : "bg-error/20 border border-error/40"

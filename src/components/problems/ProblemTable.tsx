@@ -45,7 +45,7 @@ export function ProblemTable({
     <div className="rounded-md border border-outline-variant overflow-hidden">
       <div className="overflow-x-auto">
         {/* Table header */}
-        <div className="grid grid-cols-[80px_minmax(220px,1fr)_110px_110px_minmax(150px,190px)_120px] min-w-[780px] bg-surface-container-high border-b border-outline-variant">
+        <div className="grid grid-cols-[80px_minmax(220px,1fr)_110px_110px_minmax(150px,190px)_120px] min-w-195 bg-surface-container-high border-b border-outline-variant">
           <div className="px-3 py-3 text-label-caps text-on-surface-variant font-jetbrains-mono text-center">
             STATUS
           </div>
@@ -70,7 +70,7 @@ export function ProblemTable({
         {problems.map((problem, idx) => (
           <div
             key={problem.id}
-            className={`grid grid-cols-[80px_minmax(220px,1fr)_110px_110px_minmax(150px,190px)_120px] min-w-[780px] items-center border-b border-outline-variant last:border-b-0 hover:bg-surface-container-high transition-colors ${
+            className={`grid grid-cols-[80px_minmax(220px,1fr)_110px_110px_minmax(150px,190px)_120px] min-w-195 items-center border-b border-outline-variant last:border-b-0 hover:bg-surface-container-high transition-colors ${
               idx % 2 === 0
                 ? "bg-surface-container"
                 : "bg-surface-container-low"

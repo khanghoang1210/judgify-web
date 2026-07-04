@@ -32,7 +32,7 @@ export function TopicMasteryCard({ topics }: TopicMasteryCardProps) {
         {topics.map((topic) => (
           <div
             key={topic.name}
-            className="flex-1 min-w-[140px] bg-surface-container-high p-4 rounded-md border border-outline-variant"
+            className="flex-1 min-w-35 bg-surface-container-high p-4 rounded-md border border-outline-variant"
           >
             <div className="flex justify-between items-end mb-2">
               <span className="text-body-sm font-semibold text-on-surface">

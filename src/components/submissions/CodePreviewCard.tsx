@@ -16,7 +16,7 @@ export function CodePreviewCard({ fileName, code }: CodePreviewCardProps) {
   }
 
   return (
-    <div className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col h-[500px]">
+    <div className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col h-125">
       <div className="bg-surface-container-high px-6 py-3 border-b border-outline-variant flex items-center justify-between gap-4">
         <div className="flex items-center gap-4 min-w-0">
           <span className="text-label-caps uppercase font-jetbrains-mono text-on-surface-variant">

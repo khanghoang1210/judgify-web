@@ -38,7 +38,7 @@ export function AchievementBadgesCard({ badges }: AchievementBadgesCardProps) {
                   }
                 />
               </div>
-              <span className="text-label-caps text-on-surface-variant text-center font-jetbrains-mono uppercase tracking-wide leading-tight max-w-[64px]">
+              <span className="text-label-caps text-on-surface-variant text-center font-jetbrains-mono uppercase tracking-wide leading-tight max-w-16">
                 {badge.name}
               </span>
             </div>

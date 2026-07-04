@@ -136,7 +136,7 @@ export function LeaderboardTable({
 
             {/* Streak */}
             <div>
-              <span className="inline-flex items-center justify-center min-w-[32px] px-2 py-1 rounded-md text-code-sm font-bold font-jetbrains-mono bg-tertiary-container text-tertiary">
+              <span className="inline-flex items-center justify-center min-w-8 px-2 py-1 rounded-md text-code-sm font-bold font-jetbrains-mono bg-tertiary-container text-tertiary">
                 {entry.streak}
               </span>
             </div>

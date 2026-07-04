@@ -55,16 +55,16 @@ export function CodingActivityCard({
 
       {/* Heatmap — grid stretches to fill full width */}
       <div
-        className="grid gap-[4px]"
+        className="grid gap-1"
         style={{ gridTemplateColumns: `repeat(${weeks.length}, 1fr)` }}
       >
         {weeks.map((week, wi) => (
-          <div key={wi} className="flex flex-col gap-[4px]">
+          <div key={wi} className="flex flex-col gap-1">
             {week.map((day, di) => (
               <div
                 key={di}
                 title={`${day.date}: ${day.count} submission${day.count !== 1 ? "s" : ""}`}
-                className={`aspect-square w-full rounded-[2px] ${getCellClass(day.level)}`}
+                className={`aspect-square w-full rounded-xs ${getCellClass(day.level)}`}
                 style={getCellStyle(day.level)}
               />
             ))}

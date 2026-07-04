@@ -51,7 +51,7 @@ export function RecentSubmissionsCard({
               >
                 <td className="px-6 py-4">
                   <div className="flex flex-col">
-                    <span className="font-semibold text-on-surface truncate max-w-[220px]">
+                    <span className="font-semibold text-on-surface truncate max-w-55">
                       {submission.problemTitle}
                     </span>
                     <span
