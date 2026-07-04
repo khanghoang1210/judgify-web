@@ -3,9 +3,9 @@ import type { LeaderboardEntry } from "../../types/leaderboard";
 
 // Gold / Silver / Bronze colors for top 3
 const RANK_COLORS: Record<number, string> = {
-  1: "#FFD700",
-  2: "#C0C0C0",
-  3: "#CD7F32",
+  1: "var(--color-medal-gold)",
+  2: "var(--color-medal-silver)",
+  3: "var(--color-medal-bronze)",
 };
 
 function RankChangeIcon({
@@ -13,11 +13,10 @@ function RankChangeIcon({
 }: {
   change: LeaderboardEntry["rankChange"];
 }) {
-  if (change === "up")
-    return <ChevronUp size={12} className="text-(--color-tertiary)" />;
+  if (change === "up") return <ChevronUp size={12} className="text-tertiary" />;
   if (change === "down")
-    return <ChevronDown size={12} className="text-(--color-error)" />;
-  return <Minus size={12} className="text-(--color-on-surface-variant)" />;
+    return <ChevronDown size={12} className="text-error" />;
+  return <Minus size={12} className="text-on-surface-variant" />;
 }
 
 interface LeaderboardTableProps {
@@ -43,14 +42,14 @@ export function LeaderboardTable({
   const showing = Math.min(entries.length, pageSize);
 
   return (
-    <div className="bg-(--color-surface-container) rounded-xl border border-(--color-outline-variant) overflow-hidden">
+    <div className="bg-surface-container rounded-xl border border-outline-variant overflow-hidden">
       {/* Table header */}
-      <div className="grid grid-cols-[56px_40px_minmax(160px,1fr)_80px_minmax(130px,160px)_90px_72px] items-center bg-(--color-surface-container-high) border-b border-(--color-outline-variant) px-4 py-3">
+      <div className="grid grid-cols-[56px_40px_minmax(160px,1fr)_80px_minmax(130px,160px)_90px_72px] items-center bg-surface-container-high border-b border-outline-variant px-4 py-3">
         {["", "RANK", "USER", "SOLVED", "ACCEPTANCE", "SCORE", "STREAK"].map(
           (h) => (
             <div
               key={h}
-              className="text-xs font-semibold text-(--color-on-surface-variant) tracking-wider font-(family-name:--font-jetbrains-mono)"
+              className="text-label-caps text-on-surface-variant font-jetbrains-mono"
             >
               {h}
             </div>
@@ -66,10 +65,10 @@ export function LeaderboardTable({
         return (
           <div
             key={entry.userId}
-            className={`grid grid-cols-[56px_40px_minmax(160px,1fr)_80px_minmax(130px,160px)_90px_72px] items-center px-4 py-3.5 border-b border-(--color-outline-variant) last:border-b-0 transition-colors ${
+            className={`grid grid-cols-[56px_40px_minmax(160px,1fr)_80px_minmax(130px,160px)_90px_72px] items-center px-4 py-3.5 border-b border-outline-variant last:border-b-0 transition-colors ${
               isCurrentUser
-                ? "bg-(--color-primary-container)/10 hover:bg-(--color-primary-container)/15"
-                : "hover:bg-(--color-surface-container-high)"
+                ? "bg-primary-container/10 hover:bg-primary-container/15"
+                : "hover:bg-surface-container-high"
             }`}
           >
             {/* Rank change */}
@@ -79,7 +78,7 @@ export function LeaderboardTable({
 
             {/* Rank number */}
             <div
-              className="text-sm font-bold font-(family-name:--font-jetbrains-mono)"
+              className="text-code-md font-bold font-jetbrains-mono"
               style={{ color: rankColor ?? "var(--color-on-surface-variant)" }}
             >
               {String(entry.rank).padStart(2, "0")}
@@ -87,33 +86,31 @@ export function LeaderboardTable({
 
             {/* User */}
             <div className="flex items-center gap-3 min-w-0">
-              <div className="w-8 h-8 rounded-full shrink-0 flex items-center justify-center bg-gradient-to-br from-(--color-primary-container) to-(--color-secondary-container) text-sm font-bold text-white">
+              <div className="w-8 h-8 rounded-full shrink-0 flex items-center justify-center bg-linear-to-br from-primary-container to-secondary-container text-body-sm font-bold text-on-surface">
                 {entry.avatarInitial}
               </div>
               <div className="min-w-0">
                 <p
-                  className={`text-sm font-medium truncate ${
-                    isCurrentUser
-                      ? "text-(--color-primary)"
-                      : "text-(--color-on-surface)"
+                  className={`text-body-sm font-medium truncate ${
+                    isCurrentUser ? "text-primary" : "text-on-surface"
                   }`}
                 >
                   {entry.username}
                 </p>
-                <p className="text-xs text-(--color-on-surface-variant) font-(family-name:--font-jetbrains-mono)">
+                <p className="text-code-sm text-on-surface-variant font-jetbrains-mono">
                   {entry.tier}
                 </p>
               </div>
             </div>
 
             {/* Solved */}
-            <div className="text-sm text-(--color-on-surface) font-(family-name:--font-jetbrains-mono)">
+            <div className="text-code-md text-on-surface font-jetbrains-mono">
               {entry.solved}
             </div>
 
             {/* Acceptance */}
             <div className="flex items-center gap-2 pr-2">
-              <div className="flex-1 h-1.5 rounded-full bg-(--color-surface-container-high) overflow-hidden min-w-0">
+              <div className="flex-1 h-1.5 rounded-full bg-surface-container-high overflow-hidden min-w-0">
                 <div
                   className="h-full rounded-full"
                   style={{
@@ -122,24 +119,24 @@ export function LeaderboardTable({
                       entry.acceptance >= 80
                         ? "var(--color-tertiary)"
                         : entry.acceptance >= 65
-                          ? "#ffb347"
+                          ? "var(--color-warning)"
                           : "var(--color-error)",
                   }}
                 />
               </div>
-              <span className="text-xs text-(--color-on-surface-variant) font-(family-name:--font-jetbrains-mono) shrink-0 w-10 text-right">
+              <span className="text-code-sm text-on-surface-variant font-jetbrains-mono shrink-0 w-10 text-right">
                 {entry.acceptance.toFixed(1)}%
               </span>
             </div>
 
             {/* Score */}
-            <div className="text-sm font-medium text-(--color-on-surface) font-(family-name:--font-jetbrains-mono)">
+            <div className="text-code-md font-medium text-on-surface font-jetbrains-mono">
               {entry.score.toLocaleString()}
             </div>
 
             {/* Streak */}
             <div>
-              <span className="inline-flex items-center justify-center min-w-[32px] px-2 py-1 rounded-md text-xs font-bold font-(family-name:--font-jetbrains-mono) bg-(--color-tertiary-container) text-(--color-tertiary)">
+              <span className="inline-flex items-center justify-center min-w-[32px] px-2 py-1 rounded-md text-code-sm font-bold font-jetbrains-mono bg-tertiary-container text-tertiary">
                 {entry.streak}
               </span>
             </div>
@@ -148,8 +145,8 @@ export function LeaderboardTable({
       })}
 
       {/* Footer */}
-      <div className="flex items-center justify-between px-5 py-3.5 bg-(--color-surface-container-low) border-t border-(--color-outline-variant)">
-        <span className="text-xs text-(--color-on-surface-variant) font-(family-name:--font-jetbrains-mono)">
+      <div className="flex items-center justify-between px-5 py-3.5 bg-surface-container-low border-t border-outline-variant">
+        <span className="text-code-sm text-on-surface-variant font-jetbrains-mono">
           Showing top {showing} of {totalCompetitors.toLocaleString()}{" "}
           competitors
         </span>
@@ -157,17 +154,17 @@ export function LeaderboardTable({
           <button
             onClick={onPrev}
             disabled={page <= 1}
-            className="px-3 py-1.5 text-xs rounded-md border border-(--color-outline-variant) text-(--color-on-surface-variant) hover:text-(--color-on-surface) hover:border-(--color-outline) transition-colors disabled:opacity-40 disabled:cursor-not-allowed font-(family-name:--font-jetbrains-mono)"
+            className="px-3 py-1.5 text-code-sm rounded-md border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-outline transition-colors disabled:opacity-40 disabled:cursor-not-allowed font-jetbrains-mono"
           >
             Previous
           </button>
-          <span className="text-xs text-(--color-on-surface-variant) font-(family-name:--font-jetbrains-mono) px-1">
+          <span className="text-code-sm text-on-surface-variant font-jetbrains-mono px-1">
             {page} / {totalPages}
           </span>
           <button
             onClick={onNext}
             disabled={page >= totalPages}
-            className="px-3 py-1.5 text-xs rounded-md border border-(--color-outline-variant) text-(--color-on-surface-variant) hover:text-(--color-on-surface) hover:border-(--color-outline) transition-colors disabled:opacity-40 disabled:cursor-not-allowed font-(family-name:--font-jetbrains-mono)"
+            className="px-3 py-1.5 text-code-sm rounded-md border border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-outline transition-colors disabled:opacity-40 disabled:cursor-not-allowed font-jetbrains-mono"
           >
             Next
           </button>

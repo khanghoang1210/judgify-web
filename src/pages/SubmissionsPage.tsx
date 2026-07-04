@@ -49,10 +49,10 @@ export function SubmissionsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold font-(family-name:--font-geist) text-(--color-on-surface)">
+        <h1 className="text-3xl font-bold font-geist text-on-surface">
           Submissions
         </h1>
-        <p className="text-(--color-on-surface-variant) mt-1">
+        <p className="text-on-surface-variant mt-1">
           Review your recent submission history
         </p>
       </div>
@@ -62,12 +62,12 @@ export function SubmissionsPage() {
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="bg-(--color-surface-container-high) rounded-xl border border-(--color-outline-variant) p-5"
+            className="bg-surface-container-high rounded-xl border border-outline-variant p-5"
           >
-            <p className="text-xs font-semibold tracking-wider uppercase font-(family-name:--font-jetbrains-mono) text-(--color-on-surface-variant)">
+            <p className="text-label-caps uppercase font-jetbrains-mono text-on-surface-variant">
               {stat.label}
             </p>
-            <p className="text-2xl font-bold font-(family-name:--font-geist) text-(--color-on-surface) mt-2">
+            <p className="text-headline-md font-bold font-geist text-on-surface mt-2">
               {stat.value}
             </p>
           </div>

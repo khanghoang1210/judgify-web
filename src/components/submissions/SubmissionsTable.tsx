@@ -12,9 +12,9 @@ interface SubmissionsTableProps {
 }
 
 const difficultyColor: Record<Difficulty, string> = {
-  Easy: "text-(--color-tertiary)",
-  Medium: "text-(--color-secondary)",
-  Hard: "text-(--color-error)",
+  Easy: "text-tertiary",
+  Medium: "text-secondary",
+  Hard: "text-error",
 };
 
 function VerdictBadge({ verdict }: { verdict: SubmissionVerdict }) {
@@ -25,16 +25,16 @@ function VerdictBadge({ verdict }: { verdict: SubmissionVerdict }) {
 
   if (accepted) {
     icon = <CheckCircle2 size={16} />;
-    color = "text-(--color-tertiary)";
+    color = "text-tertiary";
   } else if (verdict === "Time Limit Exceeded") {
     icon = <Clock size={16} />;
-    color = "text-(--color-secondary)";
+    color = "text-secondary";
   } else if (verdict === "Runtime Error") {
     icon = <AlertTriangle size={16} />;
-    color = "text-(--color-error)";
+    color = "text-error";
   } else {
     icon = <XCircle size={16} />;
-    color = "text-(--color-error)";
+    color = "text-error";
   }
 
   return (
@@ -49,10 +49,10 @@ export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-(--color-surface-container-low) rounded-xl border border-(--color-outline-variant) overflow-hidden">
+    <div className="bg-surface-container-low rounded-xl border border-outline-variant overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left">
-          <thead className="bg-(--color-surface-container-high)/50">
+          <thead className="bg-surface-container-high/50">
             <tr>
               {[
                 "Problem",
@@ -64,23 +64,23 @@ export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
               ].map((head) => (
                 <th
                   key={head}
-                  className="px-6 py-3 text-xs font-semibold tracking-wider uppercase font-(family-name:--font-jetbrains-mono) text-(--color-on-surface-variant)"
+                  className="px-6 py-3 text-label-caps uppercase font-jetbrains-mono text-on-surface-variant"
                 >
                   {head}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-(--color-outline-variant)">
+          <tbody className="divide-y divide-outline-variant">
             {submissions.map((submission) => (
               <tr
                 key={submission.id}
                 onClick={() => navigate(`/submissions/${submission.id}`)}
-                className="hover:bg-(--color-surface-container-high) transition-colors cursor-pointer"
+                className="hover:bg-surface-container-high transition-colors cursor-pointer"
               >
                 <td className="px-6 py-4">
                   <div className="flex flex-col">
-                    <span className="font-semibold text-(--color-on-surface)">
+                    <span className="font-semibold text-on-surface">
                       {submission.problemTitle}
                     </span>
                     <span
@@ -93,16 +93,16 @@ export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
                 <td className="px-6 py-4">
                   <VerdictBadge verdict={submission.verdict} />
                 </td>
-                <td className="px-6 py-4 text-sm font-(family-name:--font-jetbrains-mono) text-(--color-on-surface-variant)">
+                <td className="px-6 py-4 text-code-md font-jetbrains-mono text-on-surface-variant">
                   {submission.runtime}
                 </td>
-                <td className="px-6 py-4 text-sm font-(family-name:--font-jetbrains-mono) text-(--color-on-surface-variant)">
+                <td className="px-6 py-4 text-code-md font-jetbrains-mono text-on-surface-variant">
                   {submission.memory}
                 </td>
-                <td className="px-6 py-4 text-sm font-(family-name:--font-jetbrains-mono) text-(--color-on-surface-variant)">
+                <td className="px-6 py-4 text-code-md font-jetbrains-mono text-on-surface-variant">
                   {submission.language}
                 </td>
-                <td className="px-6 py-4 text-sm text-(--color-on-surface-variant)">
+                <td className="px-6 py-4 text-body-sm text-on-surface-variant">
                   {submission.submittedAgo}
                 </td>
               </tr>
@@ -112,7 +112,7 @@ export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
       </div>
 
       {submissions.length === 0 && (
-        <div className="px-6 py-12 text-center text-(--color-on-surface-variant)">
+        <div className="px-6 py-12 text-center text-on-surface-variant">
           No submissions match your filters.
         </div>
       )}

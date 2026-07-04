@@ -3,67 +3,66 @@ import type { ActivityItem } from "../../types/profile";
 import { DifficultyBadge } from "../problems/DifficultyBadge";
 
 interface RecentActivityCardProps {
-    items: ActivityItem[];
+  items: ActivityItem[];
 }
 
 export function RecentActivityCard({ items }: RecentActivityCardProps) {
-    return (
-        <div className="bg-(--color-surface-container) rounded-xl border border-(--color-outline-variant)">
-            {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-(--color-outline-variant)">
-                <h3 className="text-base font-semibold font-(family-name:--font-geist) text-(--color-on-surface)">
-                    Recent Activity
-                </h3>
-                <button className="text-xs font-semibold text-(--color-primary) font-(family-name:--font-jetbrains-mono) tracking-wider hover:underline">
-                    VIEW ALL
-                </button>
+  return (
+    <div className="bg-surface-container rounded-xl border border-outline-variant">
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 py-4 border-b border-outline-variant">
+        <h3 className="text-body-md font-semibold font-geist text-on-surface">
+          Recent Activity
+        </h3>
+        <button className="text-label-caps text-primary font-jetbrains-mono hover:underline">
+          VIEW ALL
+        </button>
+      </div>
+
+      {/* Rows */}
+      <div>
+        {items.map((item, idx) => (
+          <div
+            key={item.id}
+            className={`flex items-center gap-4 px-5 py-4 ${
+              idx < items.length - 1 ? "border-b border-outline-variant" : ""
+            } hover:bg-surface-container-high transition-colors`}
+          >
+            {/* Status icon */}
+            <div className="shrink-0">
+              {item.result === "accepted" ? (
+                <CheckCircle2 size={20} className="text-tertiary" />
+              ) : (
+                <XCircle size={20} className="text-error" />
+              )}
             </div>
 
-            {/* Rows */}
-            <div>
-                {items.map((item, idx) => (
-                    <div
-                        key={item.id}
-                        className={`flex items-center gap-4 px-5 py-4 ${idx < items.length - 1
-                                ? "border-b border-(--color-outline-variant)"
-                                : ""
-                            } hover:bg-(--color-surface-container-high) transition-colors`}
-                    >
-                        {/* Status icon */}
-                        <div className="shrink-0">
-                            {item.result === "accepted" ? (
-                                <CheckCircle2 size={20} className="text-(--color-tertiary)" />
-                            ) : (
-                                <XCircle size={20} className="text-(--color-error)" />
-                            )}
-                        </div>
-
-                        {/* Title + meta */}
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-(--color-on-surface) truncate">
-                                {item.title}
-                            </p>
-                            <p className="text-xs text-(--color-on-surface-variant) mt-0.5">
-                                {item.category} • {item.timeAgo}
-                            </p>
-                        </div>
-
-                        {/* Result badge + difficulty */}
-                        <div className="shrink-0 text-right flex flex-col items-end gap-1">
-                            {item.result === "accepted" && item.points != null ? (
-                                <span className="text-sm font-bold text-(--color-tertiary) font-(family-name:--font-jetbrains-mono)">
-                                    +{item.points} pts
-                                </span>
-                            ) : (
-                                <span className="text-xs font-bold text-(--color-error) font-(family-name:--font-jetbrains-mono) tracking-wide">
-                                    WRONG ANSWER
-                                </span>
-                            )}
-                            <DifficultyBadge difficulty={item.difficulty} />
-                        </div>
-                    </div>
-                ))}
+            {/* Title + meta */}
+            <div className="flex-1 min-w-0">
+              <p className="text-body-sm font-medium text-on-surface truncate">
+                {item.title}
+              </p>
+              <p className="text-xs text-on-surface-variant mt-0.5">
+                {item.category} • {item.timeAgo}
+              </p>
             </div>
-        </div>
-    );
+
+            {/* Result badge + difficulty */}
+            <div className="shrink-0 text-right flex flex-col items-end gap-1">
+              {item.result === "accepted" && item.points != null ? (
+                <span className="text-code-md font-bold text-tertiary font-jetbrains-mono">
+                  +{item.points} pts
+                </span>
+              ) : (
+                <span className="text-code-sm font-bold text-error font-jetbrains-mono tracking-wide">
+                  WRONG ANSWER
+                </span>
+              )}
+              <DifficultyBadge difficulty={item.difficulty} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }

@@ -12,7 +12,7 @@ export function SubmissionStatusBanner({
   const accent = accepted ? "--color-tertiary" : "--color-error";
 
   return (
-    <div className="bg-(--color-surface-container) border border-(--color-outline-variant) rounded-xl overflow-hidden relative">
+    <div className="bg-surface-container border border-outline-variant rounded-xl overflow-hidden relative">
       <div
         className="absolute top-0 left-0 w-1 h-full"
         style={{ backgroundColor: `var(${accent})` }}
@@ -29,12 +29,12 @@ export function SubmissionStatusBanner({
             {accepted ? (
               <CheckCircle2
                 size={40}
-                className="text-(--color-tertiary)"
+                className="text-tertiary"
                 fill="currentColor"
                 fillOpacity={0.15}
               />
             ) : (
-              <XCircle size={40} className="text-(--color-error)" />
+              <XCircle size={40} className="text-error" />
             )}
           </div>
           <div>
@@ -44,19 +44,17 @@ export function SubmissionStatusBanner({
             >
               {submission.verdict}
             </h2>
-            <p className="text-(--color-on-surface-variant) mt-2 text-sm">
+            <p className="text-on-surface-variant mt-2 text-body-sm">
               Submitted {submission.submittedAgo} •{" "}
-              <span className="text-(--color-on-surface)">
-                {submission.language}
-              </span>
+              <span className="text-on-surface">{submission.language}</span>
             </p>
           </div>
         </div>
         <div className="text-left sm:text-right">
-          <span className="block mb-1 text-xs font-semibold tracking-wider font-(family-name:--font-jetbrains-mono) text-(--color-on-surface-variant)">
+          <span className="block mb-1 text-label-caps font-jetbrains-mono text-on-surface-variant">
             TEST CASES
           </span>
-          <span className="text-[32px] font-bold font-(family-name:--font-geist) text-(--color-on-surface)">
+          <span className="text-[32px] font-bold font-geist text-on-surface">
             {submission.testCasesPassed}/{submission.testCasesTotal}
           </span>
         </div>

@@ -19,15 +19,15 @@ export function LeaderboardFilters({
   return (
     <div className="flex items-center justify-between gap-4">
       {/* Tabs */}
-      <div className="flex rounded-lg bg-(--color-surface-container-high) p-1 gap-1">
+      <div className="flex rounded-lg bg-surface-container-high p-1 gap-1">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors font-(family-name:--font-jetbrains-mono) ${
+            className={`px-4 py-1.5 text-code-md font-medium rounded-md transition-colors font-jetbrains-mono ${
               activeTab === tab.id
-                ? "bg-(--color-surface-container-highest) text-(--color-on-surface)"
-                : "text-(--color-on-surface-variant) hover:text-(--color-on-surface)"
+                ? "bg-surface-container-highest text-on-surface"
+                : "text-on-surface-variant hover:text-on-surface"
             }`}
           >
             {tab.label}
@@ -36,11 +36,9 @@ export function LeaderboardFilters({
       </div>
 
       {/* Filter button */}
-      <button className="flex items-center gap-2 px-3 py-2 rounded-lg border border-(--color-outline-variant) text-sm text-(--color-on-surface-variant) hover:text-(--color-on-surface) hover:border-(--color-outline) transition-colors">
+      <button className="flex items-center gap-2 px-3 py-2 rounded-lg border border-outline-variant text-body-sm text-on-surface-variant hover:text-on-surface hover:border-outline transition-colors">
         <SlidersHorizontal size={14} />
-        <span className="font-(family-name:--font-jetbrains-mono)">
-          Filter
-        </span>
+        <span className="font-jetbrains-mono">Filter</span>
       </button>
     </div>
   );

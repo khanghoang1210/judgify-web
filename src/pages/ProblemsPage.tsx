@@ -60,10 +60,10 @@ export function ProblemsPage() {
       {/* Page header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold font-(family-name:--font-geist) text-(--color-on-surface)">
+          <h1 className="text-headline-md font-bold font-geist text-on-surface">
             Problems
           </h1>
-          <p className="text-sm text-(--color-on-surface-variant) mt-1">
+          <p className="text-body-sm text-on-surface-variant mt-1">
             Challenge yourself with curated coding problems from top tech
             companies.
           </p>
@@ -72,7 +72,7 @@ export function ProblemsPage() {
           variant="outline"
           size="sm"
           onClick={pickRandom}
-          className="bg-(--color-primary) text-(--color-on-primary) border-(--color-primary) hover:bg-(--color-primary) hover:opacity-85 flex items-center gap-2 shrink-0 transition-opacity cursor-pointer"
+          className="bg-primary text-on-primary border-primary hover:bg-primary hover:opacity-85 flex items-center gap-2 shrink-0 transition-opacity cursor-pointer"
         >
           <Sparkles size={14} />
           Pick Random
@@ -106,11 +106,11 @@ export function ProblemsPage() {
       {/* Bottom cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-2">
         {/* Master Technical Interviews */}
-        <div className="bg-(--color-surface-container) border border-(--color-outline-variant) rounded-md p-6">
-          <h3 className="text-base font-semibold font-(family-name:--font-geist) text-(--color-primary) mb-2">
+        <div className="bg-surface-container border border-outline-variant rounded-md p-6">
+          <h3 className="text-body-md font-semibold font-geist text-primary mb-2">
             Master Technical Interviews
           </h3>
-          <p className="text-sm text-(--color-on-surface-variant) mb-5 leading-relaxed">
+          <p className="text-body-sm text-on-surface-variant mb-5 leading-relaxed">
             Our curated playlists for top companies like Google, Meta, and
             Netflix are designed to get you hired.
           </p>
@@ -120,15 +120,15 @@ export function ProblemsPage() {
         </div>
 
         {/* Trending Tags */}
-        <div className="bg-(--color-surface-container) border border-(--color-outline-variant) rounded-md p-6">
-          <h3 className="text-xs font-semibold tracking-widest font-(family-name:--font-jetbrains-mono) text-(--color-primary) mb-4 uppercase">
+        <div className="bg-surface-container border border-outline-variant rounded-md p-6">
+          <h3 className="text-label-caps font-jetbrains-mono text-primary mb-4 uppercase">
             Trending Tags
           </h3>
           <div className="flex flex-wrap gap-2">
             {trendingTags.map((tag) => (
               <button
                 key={tag}
-                className="px-3 py-1.5 text-xs rounded-md border border-(--color-outline-variant) text-(--color-on-surface-variant) bg-(--color-surface-container-high) hover:border-(--color-primary) hover:text-(--color-primary) transition-colors font-(family-name:--font-jetbrains-mono)"
+                className="px-3 py-1.5 text-code-sm rounded-md border border-outline-variant text-on-surface-variant bg-surface-container-high hover:border-primary hover:text-primary transition-colors font-jetbrains-mono"
               >
                 {tag}
               </button>

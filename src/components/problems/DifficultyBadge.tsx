@@ -7,10 +7,9 @@ interface DifficultyBadgeProps {
 }
 
 const styles: Record<Difficulty, string> = {
-  Easy: "bg-(--color-tertiary)/20 text-(--color-tertiary) border border-(--color-tertiary-container)",
-  Medium:
-    "bg-(--color-secondary)/20 text-(--color-secondary) border border-(--color-secondary)",
-  Hard: "bg-(--color-error)/20 text-(--color-error) border border-(--color-error)",
+  Easy: "bg-tertiary/20 text-tertiary border border-tertiary-container",
+  Medium: "bg-secondary/20 text-secondary border border-secondary",
+  Hard: "bg-error/20 text-error border border-error",
 };
 
 export function DifficultyBadge({
@@ -20,7 +19,7 @@ export function DifficultyBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded font-(family-name:--font-jetbrains-mono)",
+        "inline-flex items-center px-2 py-0.5 text-code-sm font-semibold rounded font-jetbrains-mono",
         styles[difficulty],
         className,
       )}
