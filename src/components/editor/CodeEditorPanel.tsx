@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Maximize2, RefreshCw, Settings, TerminalSquare } from "lucide-react";
 import type { ProblemDetail } from "../../types/problemDetail";
@@ -17,12 +17,44 @@ export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
   const [code, setCode] = useState(problem.starterCode);
   const [bottomTab, setBottomTab] = useState<BottomTab>("testcase");
   const [activeCase, setActiveCase] = useState(0);
+  const [bottomHeight, setBottomHeight] = useState(34); // percentage
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const lineCount = code.split("\n").length;
   const testCase = problem.testCases[activeCase];
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const newBottomHeight = ((rect.bottom - e.clientY) / rect.height) * 100;
+      // Limit between 20% and 60%
+      if (newBottomHeight >= 20 && newBottomHeight <= 60) {
+        setBottomHeight(newBottomHeight);
+      }
+    };
+    const handleMouseUp = () => setIsDragging(false);
+
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+      document.body.style.cursor = "row-resize";
+      document.body.style.userSelect = "none";
+    }
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
+  }, [isDragging]);
+
   return (
-    <section className="flex flex-col h-full overflow-hidden border border-outline-variant rounded-xl bg-surface-container-lowest">
+    <section
+      ref={containerRef}
+      className="flex flex-col h-full overflow-hidden bg-surface-container-lowest"
+    >
       {/* Editor header */}
       <div className="h-12 bg-surface-container-low flex items-center justify-between px-4 border-b border-outline-variant">
         <div className="flex items-center gap-2">
@@ -69,7 +101,10 @@ export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
       </div>
 
       {/* Code editor */}
-      <div className="flex-1 min-h-0 flex bg-surface-container-lowest overflow-hidden">
+      <div
+        className="min-h-0 flex bg-surface-container-lowest overflow-hidden"
+        style={{ height: `${100 - bottomHeight}%` }}
+      >
         <div className="w-12 shrink-0 text-right pr-3 pt-4 select-none text-outline-variant font-jetbrains-mono text-code-md leading-6 border-r border-outline-variant/10 overflow-hidden">
           {Array.from({ length: lineCount }).map((_, idx) => (
             <div key={idx}>{idx + 1}</div>
@@ -83,8 +118,22 @@ export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
         />
       </div>
 
+      {/* Resizer */}
+      <div
+        className="h-1 bg-outline-variant hover:bg-primary cursor-row-resize transition-colors relative group shrink-0"
+        onMouseDown={() => setIsDragging(true)}
+      >
+        {/* Wider invisible hit area */}
+        <div className="absolute inset-x-0 -top-1.5 -bottom-1.5" />
+        {/* Visual pill on hover */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-1 w-10 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+      </div>
+
       {/* Test cases */}
-      <div className="h-[34%] min-h-0 bg-surface border-t border-outline-variant flex flex-col">
+      <div
+        className="min-h-0 bg-surface flex flex-col"
+        style={{ height: `${bottomHeight}%` }}
+      >
         <div className="px-4 py-2 bg-surface-container-low flex items-center justify-between border-b border-outline-variant">
           <div className="flex items-center gap-4">
             {(["testcase", "result"] as BottomTab[]).map((tab) => (

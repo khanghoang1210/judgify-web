@@ -22,7 +22,7 @@ export function ProblemDescriptionPanel({
   const [activeTab, setActiveTab] = useState<TabId>("description");
 
   return (
-    <section className="flex flex-col h-full overflow-hidden border border-outline-variant rounded-xl bg-surface-container-lowest">
+    <section className="flex flex-col h-full overflow-hidden bg-surface-container-lowest">
       {/* Tabs */}
       <div className="flex bg-surface-container-low px-2 border-b border-outline-variant overflow-x-auto">
         {tabs.map((tab) => (

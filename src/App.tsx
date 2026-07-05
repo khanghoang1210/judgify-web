@@ -11,20 +11,30 @@ import { ProfilePage } from "./pages/ProfilePage";
 function App() {
   return (
     <BrowserRouter>
-      <AppShell>
-        <Routes>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/problems" element={<ProblemsPage />} />
-          <Route path="/problems/:problemId" element={<ProblemDetailPage />} />
-          <Route path="/submissions" element={<SubmissionsPage />} />
-          <Route
-            path="/submissions/:submissionId"
-            element={<SubmissionResultPage />}
-          />
-          <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-        </Routes>
-      </AppShell>
+      <Routes>
+        {/* Problem detail page has its own layout without sidebar */}
+        <Route path="/problems/:problemId" element={<ProblemDetailPage />} />
+
+        {/* Other pages use AppShell with sidebar */}
+        <Route
+          path="*"
+          element={
+            <AppShell>
+              <Routes>
+                <Route path="/" element={<DashboardPage />} />
+                <Route path="/problems" element={<ProblemsPage />} />
+                <Route path="/submissions" element={<SubmissionsPage />} />
+                <Route
+                  path="/submissions/:submissionId"
+                  element={<SubmissionResultPage />}
+                />
+                <Route path="/leaderboard" element={<LeaderboardPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+              </Routes>
+            </AppShell>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 }
