@@ -7,11 +7,15 @@ import { SubmissionsPage } from "./pages/SubmissionsPage";
 import { SubmissionResultPage } from "./pages/SubmissionResultPage";
 import { LeaderboardPage } from "./pages/LeaderboardPage";
 import { ProfilePage } from "./pages/ProfilePage";
+import { RegisterPage } from "./pages/RegisterPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Auth pages - no sidebar */}
+        <Route path="/register" element={<RegisterPage />} />
+        
         {/* Problem detail page has its own layout without sidebar */}
         <Route path="/problems/:problemId" element={<ProblemDetailPage />} />
 
