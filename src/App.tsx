@@ -8,6 +8,7 @@ import { SubmissionResultPage } from "./pages/SubmissionResultPage";
 import { LeaderboardPage } from "./pages/LeaderboardPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { RegisterPage } from "./pages/RegisterPage";
+import { LoginPage } from "./pages/LoginPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         {/* Auth pages - no sidebar */}
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
         
         {/* Problem detail page has its own layout without sidebar */}
         <Route path="/problems/:problemId" element={<ProblemDetailPage />} />
