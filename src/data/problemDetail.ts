@@ -48,7 +48,6 @@ export const problemDetail: ProblemDetail = {
     { label: "C++", value: "cpp" },
     { label: "Java", value: "java" },
     { label: "Python 3", value: "python" },
-    { label: "Swift", value: "swift" },
   ],
   starterCode: `class LRUCache:
 

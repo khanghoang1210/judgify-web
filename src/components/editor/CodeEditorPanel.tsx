@@ -1,13 +1,33 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Maximize2, RefreshCw, Settings, TerminalSquare } from "lucide-react";
+import CodeMirror from "@uiw/react-codemirror";
+import type { Extension } from "@codemirror/state";
+import { python } from "@codemirror/lang-python";
+import { cpp } from "@codemirror/lang-cpp";
+import { java } from "@codemirror/lang-java";
 import type { ProblemDetail } from "../../types/problemDetail";
+import { judgifyTheme, judgifyHighlighting } from "./editorTheme";
 
 interface CodeEditorPanelProps {
   problem: ProblemDetail;
 }
 
 type BottomTab = "testcase" | "result";
+
+/** Maps a language value to its CodeMirror grammar (empty = no highlighting). */
+function langExtension(language: string): Extension[] {
+  switch (language) {
+    case "python":
+      return [python()];
+    case "cpp":
+      return [cpp()];
+    case "java":
+      return [java()];
+    default:
+      return [];
+  }
+}
 
 export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
   const navigate = useNavigate();
@@ -21,7 +41,6 @@ export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const lineCount = code.split("\n").length;
   const testCase = problem.testCases[activeCase];
 
   useEffect(() => {
@@ -102,19 +121,27 @@ export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
 
       {/* Code editor */}
       <div
-        className="min-h-0 flex bg-surface-container-lowest overflow-hidden"
+        className="min-h-0 bg-surface-container-lowest overflow-hidden"
         style={{ height: `${100 - bottomHeight}%` }}
       >
-        <div className="w-12 shrink-0 text-right pr-3 pt-4 select-none text-outline-variant font-jetbrains-mono text-code-md leading-6 border-r border-outline-variant/10 overflow-hidden">
-          {Array.from({ length: lineCount }).map((_, idx) => (
-            <div key={idx}>{idx + 1}</div>
-          ))}
-        </div>
-        <textarea
+        <CodeMirror
           value={code}
-          onChange={(e) => setCode(e.target.value)}
-          spellCheck={false}
-          className="flex-1 resize-none bg-transparent text-on-surface font-jetbrains-mono text-code-md leading-6 pt-4 px-4 focus:outline-none"
+          onChange={(value) => setCode(value)}
+          height="100%"
+          theme={judgifyTheme}
+          extensions={[...langExtension(language), judgifyHighlighting]}
+          basicSetup={{
+            lineNumbers: true,
+            highlightActiveLine: true,
+            highlightActiveLineGutter: true,
+            bracketMatching: true,
+            closeBrackets: true,
+            autocompletion: true,
+            indentOnInput: true,
+            foldGutter: false,
+            syntaxHighlighting: false,
+          }}
+          className="h-full text-code-md"
         />
       </div>
 
