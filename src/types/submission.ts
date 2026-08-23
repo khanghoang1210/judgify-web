@@ -1,45 +1,37 @@
+import type { ApiLanguage, ApiSubmissionStatus, SubmissionTestResult } from "./api";
 import type { Difficulty } from "./problem";
-
-export type SubmissionVerdict =
-  | "Accepted"
-  | "Wrong Answer"
-  | "Time Limit Exceeded"
-  | "Runtime Error"
-  | "Compilation Error";
 
 export interface SubmissionListItem {
   id: number;
   problemId: number;
+  problemSlug: string;
   problemTitle: string;
   difficulty: Difficulty;
-  verdict: SubmissionVerdict;
-  language: string;
+  status: ApiSubmissionStatus;
+  language: ApiLanguage;
+  /** Preformatted, "—" when the judge has not reported a value. */
   runtime: string;
   memory: string;
-  submittedAgo: string;
+  /** ISO timestamp. */
+  submittedAt: string;
 }
 
-export interface PerformanceStat {
-  label: string;
-  value: string;
-  beats: number;
-}
-
-export interface SubmissionResult {
+/** The submission result page, assembled from the submission plus its problem. */
+export interface SubmissionDetail {
   id: number;
   problemId: number;
+  problemSlug: string;
   problemTitle: string;
-  verdict: SubmissionVerdict;
-  language: string;
+  status: ApiSubmissionStatus;
+  language: ApiLanguage;
   fileName: string;
-  submittedAgo: string;
+  submittedAt: string;
+  errorMessage: string | null;
+  testResults: SubmissionTestResult[];
   testCasesPassed: number;
   testCasesTotal: number;
-  runtime: PerformanceStat;
-  memory: PerformanceStat;
-  code: string;
+  runtime: string;
+  memory: string;
   timeLimit: string;
   memoryLimit: string;
-  rankUpTitle: string;
-  rankUpMessage: string;
 }

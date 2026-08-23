@@ -1,4 +1,4 @@
-import { Calendar } from "lucide-react";
+import { Mail, ShieldCheck } from "lucide-react";
 import type { ProfileUser } from "../../types/profile";
 
 interface ProfileHeaderProps {
@@ -23,30 +23,18 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
             <h1 className="text-3xl font-bold font-geist text-on-surface">
               {user.username}
             </h1>
-            <span className="px-2.5 py-1 text-label-caps font-bold rounded-full bg-primary-container text-on-surface font-jetbrains-mono uppercase">
-              {user.tier}
+            <span className="px-2.5 py-1 text-label-caps font-bold rounded-full bg-primary-container text-on-surface font-jetbrains-mono uppercase inline-flex items-center gap-1">
+              <ShieldCheck size={13} />
+              {user.role}
             </span>
             <span className="ml-auto flex items-center gap-1.5 text-body-sm text-on-surface-variant whitespace-nowrap">
-              <Calendar size={13} />
-              Joined {user.joinDate}
+              <Mail size={13} />
+              {user.email}
             </span>
           </div>
 
-          {/* Bio */}
-          <p className="mt-2 text-body-sm text-on-surface-variant leading-relaxed max-w-2xl">
-            {user.bio}
-          </p>
-
-          {/* Stat blocks */}
-          <div className="mt-4 grid grid-cols-3 gap-3">
-            <div className="bg-surface-container-high rounded-lg p-4 text-center border border-outline-variant">
-              <div className="text-3xl font-bold font-geist text-on-surface">
-                {user.stats.globalRating.toLocaleString()}
-              </div>
-              <div className="text-label-caps text-on-surface-variant font-jetbrains-mono mt-1 uppercase">
-                Global Rating
-              </div>
-            </div>
+          {/* Stat blocks — every value comes from your submission history. */}
+          <div className="mt-6 grid grid-cols-3 gap-3">
             <div className="bg-surface-container-high rounded-lg p-4 text-center border border-outline-variant">
               <div className="text-3xl font-bold font-geist text-tertiary">
                 {user.stats.problemsSolved}
@@ -57,10 +45,18 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
             </div>
             <div className="bg-surface-container-high rounded-lg p-4 text-center border border-outline-variant">
               <div className="text-3xl font-bold font-geist text-on-surface">
-                {user.stats.contestsRun}
+                {user.stats.totalSubmissions.toLocaleString()}
               </div>
               <div className="text-label-caps text-on-surface-variant font-jetbrains-mono mt-1 uppercase">
-                Contests Run
+                Submissions
+              </div>
+            </div>
+            <div className="bg-surface-container-high rounded-lg p-4 text-center border border-outline-variant">
+              <div className="text-3xl font-bold font-geist text-on-surface">
+                {user.stats.acceptance}%
+              </div>
+              <div className="text-label-caps text-on-surface-variant font-jetbrains-mono mt-1 uppercase">
+                Acceptance
               </div>
             </div>
           </div>

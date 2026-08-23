@@ -1,49 +1,49 @@
+import type { ApiSubmissionStatus } from "./api";
+import type { Difficulty } from "./problem";
+
 export type ActivityLevel = 0 | 1 | 2 | 3 | 4;
 
 export interface ActivityDay {
-    date: string; // YYYY-MM-DD
-    count: number;
-    level: ActivityLevel;
+  /** Local `YYYY-MM-DD`. */
+  date: string;
+  count: number;
+  level: ActivityLevel;
 }
 
-export type SubmissionResult = "accepted" | "wrong_answer" | "tle" | "mle";
-
 export interface ActivityItem {
-    id: string;
-    title: string;
-    category: string;
-    timeAgo: string;
-    result: SubmissionResult;
-    points?: number;
-    difficulty: "Easy" | "Medium" | "Hard";
+  id: number;
+  title: string;
+  problemSlug: string;
+  submittedAt: string;
+  status: ApiSubmissionStatus;
+  difficulty: Difficulty;
 }
 
 export interface ProblemBreakdown {
-    easy: { solved: number; total: number };
-    medium: { solved: number; total: number };
-    hard: { solved: number; total: number };
+  easy: { solved: number; total: number };
+  medium: { solved: number; total: number };
+  hard: { solved: number; total: number };
 }
 
 export interface SkillScore {
-    name: string;
-    value: number; // 0–100
+  name: string;
+  value: number;
 }
 
 export interface AchievementBadge {
-    id: string;
-    name: string;
-    icon: "star" | "trophy" | "zap" | "award" | "flame";
-    earned: boolean;
+  id: string;
+  name: string;
+  icon: "star" | "trophy" | "zap" | "award" | "flame";
+  earned: boolean;
 }
 
 export interface ProfileUser {
-    username: string;
-    tier: string;
-    joinDate: string;
-    bio: string;
-    stats: {
-        globalRating: number;
-        problemsSolved: number;
-        contestsRun: number;
-    };
+  username: string;
+  email: string;
+  role: string;
+  stats: {
+    problemsSolved: number;
+    totalSubmissions: number;
+    acceptance: number;
+  };
 }

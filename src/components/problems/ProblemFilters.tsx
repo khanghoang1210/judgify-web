@@ -1,15 +1,11 @@
-import { useState } from "react";
 import { Select } from "../ui/Select";
-import { cn } from "../../lib/cn";
 
 interface ProblemFiltersProps {
   onDifficultyChange: (v: string) => void;
   onStatusChange: (v: string) => void;
-  onTopicChange: (v: string) => void;
   onSortChange: (v: string) => void;
   difficulty: string;
   status: string;
-  topic: string;
   sort: string;
 }
 
@@ -27,17 +23,7 @@ const statusOptions = [
   { value: "unsolved", label: "Unsolved" },
 ];
 
-const topicOptions = [
-  { value: "", label: "Topic" },
-  { value: "Array", label: "Array" },
-  { value: "String", label: "String" },
-  { value: "DP", label: "Dynamic Programming" },
-  { value: "Graph", label: "Graph" },
-  { value: "Tree", label: "Tree" },
-  { value: "Linked List", label: "Linked List" },
-  { value: "Hash Table", label: "Hash Table" },
-];
-
+// Topic filtering is gone: the API has no tags on problems.
 const sortOptions = [
   { value: "newest", label: "Newest" },
   { value: "oldest", label: "Oldest" },
@@ -47,39 +33,14 @@ const sortOptions = [
   { value: "difficulty-desc", label: "Difficulty ↓" },
 ];
 
-interface CompanyTagButtonProps {
-  active: boolean;
-  onClick: () => void;
-}
-
-function CompanyTagButton({ active, onClick }: CompanyTagButtonProps) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "px-3 py-2 text-body-sm rounded-md border transition-colors font-medium",
-        active
-          ? "border-primary text-primary bg-surface-container-high"
-          : "border-outline-variant text-on-surface-variant bg-surface-container-high hover:border-outline",
-      )}
-    >
-      Company Tag
-    </button>
-  );
-}
-
 export function ProblemFilters({
   onDifficultyChange,
   onStatusChange,
-  onTopicChange,
   onSortChange,
   difficulty,
   status,
-  topic,
   sort,
 }: ProblemFiltersProps) {
-  const [companyTag, setCompanyTag] = useState(false);
-
   return (
     <div className="flex items-center justify-between gap-2">
       <div className="flex items-center gap-2">
@@ -94,16 +55,6 @@ export function ProblemFilters({
           onValueChange={onStatusChange}
           options={statusOptions}
           className="w-28"
-        />
-        <Select
-          value={topic}
-          onValueChange={onTopicChange}
-          options={topicOptions}
-          className="w-36"
-        />
-        <CompanyTagButton
-          active={companyTag}
-          onClick={() => setCompanyTag((v) => !v)}
         />
       </div>
 

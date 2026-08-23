@@ -1,7 +1,11 @@
-import { Bell } from "lucide-react";
-import { Search } from "lucide-react";
+import { Bell, LogOut, Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../lib/auth/authContext";
 
 export function Topbar() {
+  const navigate = useNavigate();
+  const { session, signOut } = useAuth();
+
   return (
     <header className="h-16 bg-background border-b border-outline-variant flex items-center gap-4 px-6">
       {/* Search bar */}
@@ -25,20 +29,46 @@ export function Topbar() {
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
         </button>
 
-        {/* Rank + username + avatar */}
-        <div className="flex items-center gap-3">
-          <div className="text-right">
-            <p className="text-label-caps text-on-surface-variant font-jetbrains-mono">
-              RANK #42
-            </p>
-            <p className="text-body-sm font-medium text-on-surface leading-tight">
-              Alex Dev
-            </p>
+        {session ? (
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <p className="text-label-caps text-on-surface-variant font-jetbrains-mono">
+                {session.role}
+              </p>
+              <p className="text-body-sm font-medium text-on-surface leading-tight">
+                {session.username}
+              </p>
+            </div>
+            <div className="w-9 h-9 rounded-full bg-linear-to-br from-primary to-secondary flex items-center justify-center text-body-sm font-bold text-on-primary shrink-0">
+              {session.username[0]?.toUpperCase()}
+            </div>
+            <button
+              onClick={() => {
+                signOut();
+                navigate("/login");
+              }}
+              title="Sign out"
+              className="w-9 h-9 flex items-center justify-center rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+            >
+              <LogOut size={18} />
+            </button>
           </div>
-          <div className="w-9 h-9 rounded-full bg-linear-to-br from-primary to-secondary flex items-center justify-center text-body-sm font-bold text-on-primary shrink-0">
-            A
+        ) : (
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate("/login")}
+              className="px-4 py-2 rounded-md border border-outline-variant text-body-sm text-on-surface hover:border-primary transition-colors"
+            >
+              Sign in
+            </button>
+            <button
+              onClick={() => navigate("/register")}
+              className="px-4 py-2 rounded-md bg-primary-container text-on-primary-container text-body-sm font-semibold hover:opacity-90 transition-opacity"
+            >
+              Register
+            </button>
           </div>
-        </div>
+        )}
       </div>
     </header>
   );

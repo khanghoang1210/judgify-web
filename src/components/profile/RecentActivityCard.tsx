@@ -1,6 +1,8 @@
-import { CheckCircle2, XCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import type { ActivityItem } from "../../types/profile";
+import { timeAgo } from "../../lib/format";
 import { DifficultyBadge } from "../problems/DifficultyBadge";
+import { StatusBadge } from "../submissions/StatusBadge";
 
 interface RecentActivityCardProps {
   items: ActivityItem[];
@@ -14,55 +16,47 @@ export function RecentActivityCard({ items }: RecentActivityCardProps) {
         <h3 className="text-body-md font-semibold font-geist text-on-surface">
           Recent Activity
         </h3>
-        <button className="text-label-caps text-primary font-jetbrains-mono hover:underline">
+        <Link
+          to="/submissions"
+          className="text-label-caps text-primary font-jetbrains-mono hover:underline"
+        >
           VIEW ALL
-        </button>
+        </Link>
       </div>
 
-      {/* Rows */}
-      <div>
-        {items.map((item, idx) => (
-          <div
-            key={item.id}
-            className={`flex items-center gap-4 px-5 py-4 ${
-              idx < items.length - 1 ? "border-b border-outline-variant" : ""
-            } hover:bg-surface-container-high transition-colors`}
-          >
-            {/* Status icon */}
-            <div className="shrink-0">
-              {item.result === "accepted" ? (
-                <CheckCircle2 size={20} className="text-tertiary" />
-              ) : (
-                <XCircle size={20} className="text-error" />
-              )}
-            </div>
+      {items.length === 0 ? (
+        <p className="px-5 py-10 text-center text-body-sm text-on-surface-variant">
+          No submissions yet.
+        </p>
+      ) : (
+        <div>
+          {items.map((item, idx) => (
+            <Link
+              key={item.id}
+              to={`/submissions/${item.id}`}
+              className={`flex items-center gap-4 px-5 py-4 ${
+                idx < items.length - 1 ? "border-b border-outline-variant" : ""
+              } hover:bg-surface-container-high transition-colors`}
+            >
+              {/* Title + meta */}
+              <div className="flex-1 min-w-0">
+                <p className="text-body-sm font-medium text-on-surface truncate">
+                  {item.title}
+                </p>
+                <p className="text-xs text-on-surface-variant mt-0.5">
+                  {timeAgo(item.submittedAt)}
+                </p>
+              </div>
 
-            {/* Title + meta */}
-            <div className="flex-1 min-w-0">
-              <p className="text-body-sm font-medium text-on-surface truncate">
-                {item.title}
-              </p>
-              <p className="text-xs text-on-surface-variant mt-0.5">
-                {item.category} • {item.timeAgo}
-              </p>
-            </div>
-
-            {/* Result badge + difficulty */}
-            <div className="shrink-0 text-right flex flex-col items-end gap-1">
-              {item.result === "accepted" && item.points != null ? (
-                <span className="text-code-md font-bold text-tertiary font-jetbrains-mono">
-                  +{item.points} pts
-                </span>
-              ) : (
-                <span className="text-code-sm font-bold text-error font-jetbrains-mono tracking-wide">
-                  WRONG ANSWER
-                </span>
-              )}
-              <DifficultyBadge difficulty={item.difficulty} />
-            </div>
-          </div>
-        ))}
-      </div>
+              {/* Verdict + difficulty */}
+              <div className="shrink-0 text-right flex flex-col items-end gap-1">
+                <StatusBadge status={item.status} size={14} className="text-code-sm" />
+                <DifficultyBadge difficulty={item.difficulty} />
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

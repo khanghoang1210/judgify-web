@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { History } from "lucide-react";
 import type { Difficulty } from "../../types/problem";
 import type { RecommendedProblem } from "../../types/dashboard";
 
@@ -19,22 +18,27 @@ const difficultyLabel: Record<Difficulty, string> = {
   Hard: "Hard",
 };
 
+/** Problems you have not solved yet — the closest thing to a recommendation the API supports. */
 export function RecommendedCard({ problems }: RecommendedCardProps) {
   const navigate = useNavigate();
 
   return (
     <div className="bg-surface-container-low rounded-lg border border-outline-variant p-6">
       <h3 className="text-headline-sm font-semibold font-geist text-on-surface mb-4">
-        Recommended
+        Up next
       </h3>
-      <div className="space-y-4">
-        {problems.map((problem) => (
-          <div
-            key={problem.id}
-            onClick={() => navigate(`/problems/${problem.id}`)}
-            className="group cursor-pointer"
-          >
-            <div className="flex items-center justify-between mb-1 gap-2">
+      {problems.length === 0 ? (
+        <p className="text-body-sm text-on-surface-variant">
+          You have solved everything published. Nice.
+        </p>
+      ) : (
+        <div className="space-y-4">
+          {problems.map((problem) => (
+            <div
+              key={problem.slug}
+              onClick={() => navigate(`/problems/${problem.slug}`)}
+              className="group cursor-pointer flex items-center justify-between gap-2"
+            >
               <p className="text-body-sm font-semibold text-on-surface group-hover:text-primary transition-colors truncate">
                 {problem.title}
               </p>
@@ -44,13 +48,9 @@ export function RecommendedCard({ problems }: RecommendedCardProps) {
                 {difficultyLabel[problem.difficulty]}
               </span>
             </div>
-            <div className="flex items-center gap-1 text-xs text-on-surface-variant">
-              <History size={14} />
-              {problem.timeAgo}
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

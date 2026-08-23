@@ -1,75 +1,55 @@
-# React + TypeScript + Vite
+# Judgify Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript + Vite frontend for [Judgify](../judgify), a LeetCode-style
+coding-problem platform. The UI reads live data from the Judgify Spring API.
 
-Currently, two official plugins are available:
+## Running locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+# 1. Start the backend (in the judgify repo)
+docker compose up -d          # MySQL 8 on :3306
+./gradlew :api:bootRun        # REST API on :8080
 
-## React Compiler
+# 2. Seed demo data (idempotent; wipes and reseeds by default)
+npm run seed                  # or: npm run seed -- --keep
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 3. Start the frontend
+npm run dev                   # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Vite proxies `/api` to `http://localhost:8080` (override with `JUDGIFY_API_URL`),
+so the browser stays same-origin and the backend needs no CORS configuration.
+Set `VITE_API_URL` to point the client at an absolute API base instead.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Seeded accounts: `alexdev` / `alex12345` (regular user) and `admin` / `admin1234`
+(admin — the only role that may read test cases).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## How data flows
+
+| Surface | Endpoint |
+| --- | --- |
+| Login / Register | `POST /auth/login`, `POST /auth/register` |
+| Problems list | `GET /problems` |
+| Problem detail | `GET /problems/{slug}` |
+| Sample test cases | `GET /admin/problems/{id}/test-cases` (admin only) |
+| Submit code | `POST /problems/{id}/submissions` |
+| Submission result | `GET /submissions/{id}` (polled while pending) |
+| Submission history | `GET /problems/{id}/submissions` |
+
+The API exposes no aggregate endpoints, so acceptance rates, solve status,
+streaks, the activity heatmap and the daily challenge are derived in
+`src/lib/derive.ts` from one fan-out (`src/lib/data/OverviewProvider.tsx`):
+the problem list plus one submission list per problem.
+
+Still mock, because there is no endpoint for it: the leaderboard
+(`src/data/leaderboard.ts`) and the skill matrix / achievement badges
+(`src/data/placeholders.ts`).
+
+## Scripts
+
+```bash
+npm run dev       # dev server
+npm run build     # typecheck + production build
+npm run lint      # eslint
+npm run seed      # seed the backend with demo data
 ```

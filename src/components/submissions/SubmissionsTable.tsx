@@ -1,11 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { AlertTriangle, CheckCircle2, Clock, XCircle } from "lucide-react";
-import type { ReactNode } from "react";
-import type {
-  SubmissionListItem,
-  SubmissionVerdict,
-} from "../../types/submission";
+import type { SubmissionListItem } from "../../types/submission";
 import type { Difficulty } from "../../types/problem";
+import { LANGUAGE_LABELS, timeAgo } from "../../lib/format";
+import { StatusBadge } from "./StatusBadge";
 
 interface SubmissionsTableProps {
   submissions: SubmissionListItem[];
@@ -16,34 +13,6 @@ const difficultyColor: Record<Difficulty, string> = {
   Medium: "text-secondary",
   Hard: "text-error",
 };
-
-function VerdictBadge({ verdict }: { verdict: SubmissionVerdict }) {
-  const accepted = verdict === "Accepted";
-
-  let icon: ReactNode;
-  let color: string;
-
-  if (accepted) {
-    icon = <CheckCircle2 size={16} />;
-    color = "text-tertiary";
-  } else if (verdict === "Time Limit Exceeded") {
-    icon = <Clock size={16} />;
-    color = "text-secondary";
-  } else if (verdict === "Runtime Error") {
-    icon = <AlertTriangle size={16} />;
-    color = "text-error";
-  } else {
-    icon = <XCircle size={16} />;
-    color = "text-error";
-  }
-
-  return (
-    <span className={`inline-flex items-center gap-2 font-semibold ${color}`}>
-      {icon}
-      {verdict}
-    </span>
-  );
-}
 
 export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
   const navigate = useNavigate();
@@ -91,7 +60,7 @@ export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <VerdictBadge verdict={submission.verdict} />
+                  <StatusBadge status={submission.status} />
                 </td>
                 <td className="px-6 py-4 text-code-md font-jetbrains-mono text-on-surface-variant">
                   {submission.runtime}
@@ -100,10 +69,10 @@ export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
                   {submission.memory}
                 </td>
                 <td className="px-6 py-4 text-code-md font-jetbrains-mono text-on-surface-variant">
-                  {submission.language}
+                  {LANGUAGE_LABELS[submission.language]}
                 </td>
                 <td className="px-6 py-4 text-body-sm text-on-surface-variant">
-                  {submission.submittedAgo}
+                  {timeAgo(submission.submittedAt)}
                 </td>
               </tr>
             ))}

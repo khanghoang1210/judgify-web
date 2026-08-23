@@ -1,10 +1,11 @@
+import type { ApiLanguage, ApiSubmissionStatus } from "./api";
 import type { Difficulty } from "./problem";
 
 export interface DailyChallenge {
-  problemId: number;
+  slug: string;
   title: string;
   difficulty: Difficulty;
-  points: number;
+  /** Distinct users with an accepted submission. */
   solvedCount: string;
   description: string;
   languages: string[];
@@ -14,6 +15,7 @@ export interface DashboardStats {
   totalSolved: number;
   totalProblems: number;
   streakDays: number;
+  /** Accepted share of your own submissions, 0–100. */
   acceptance: number;
   difficultyBreakdown: {
     easy: number;
@@ -22,39 +24,19 @@ export interface DashboardStats {
   };
 }
 
-export type MasteryTone = "tertiary" | "primary" | "muted";
-
-export interface TopicMastery {
-  name: string;
-  percent: number;
-  tone: MasteryTone;
-}
-
 export interface RecommendedProblem {
-  id: number;
+  slug: string;
   title: string;
   difficulty: Difficulty;
-  timeAgo: string;
 }
-
-export type SubmissionResult = "accepted" | "wrong";
 
 export interface DashboardSubmission {
   id: number;
+  problemSlug: string;
   problemTitle: string;
   difficulty: Difficulty;
-  result: SubmissionResult;
+  status: ApiSubmissionStatus;
   runtime: string;
-  language: string;
-  timeAgo: string;
-}
-
-export interface DashboardData {
-  userName: string;
-  streakDays: number;
-  challenge: DailyChallenge;
-  stats: DashboardStats;
-  topics: TopicMastery[];
-  recommended: RecommendedProblem[];
-  submissions: DashboardSubmission[];
+  language: ApiLanguage;
+  submittedAt: string;
 }

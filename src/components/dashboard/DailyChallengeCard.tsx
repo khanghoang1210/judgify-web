@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, BarChart, Medal, Timer, Users } from "lucide-react";
+import { ArrowRight, BarChart, Timer, Users } from "lucide-react";
 import type { DailyChallenge } from "../../types/dashboard";
 
 interface DailyChallengeCardProps {
@@ -40,10 +40,7 @@ export function DailyChallengeCard({ challenge }: DailyChallengeCardProps) {
             <BarChart size={18} />
             {challenge.difficulty}
           </span>
-          <span className="inline-flex items-center gap-1">
-            <Medal size={18} />
-            {challenge.points} Points
-          </span>
+          {/* Distinct users with an accepted submission. */}
           <span className="inline-flex items-center gap-1">
             <Users size={18} />
             {challenge.solvedCount} solved
@@ -56,7 +53,7 @@ export function DailyChallengeCard({ challenge }: DailyChallengeCardProps) {
           {challenge.description}
         </p>
         <button
-          onClick={() => navigate(`/problems/${challenge.problemId}`)}
+          onClick={() => navigate(`/problems/${challenge.slug}`)}
           className="shrink-0 bg-primary text-on-primary h-12 px-6 rounded-md font-bold hover:scale-105 transition-transform inline-flex items-center gap-2"
         >
           Solve Now

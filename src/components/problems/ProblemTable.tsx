@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import type { Problem } from "../../types/problem";
 import { StatusIcon } from "./StatusIcon";
 import { DifficultyBadge } from "./DifficultyBadge";
+import { timeAgo } from "../../lib/format";
 
 interface ProblemTableProps {
   problems: Problem[];
@@ -11,6 +12,9 @@ interface ProblemTableProps {
   onPageChange: (page: number) => void;
 }
 
+// Tags are not modelled by the API, so the table shows what the backend knows.
+const COLUMNS = "grid-cols-[80px_minmax(220px,1fr)_110px_120px_140px] min-w-170";
+
 export function ProblemTable({
   problems,
   totalCount,
@@ -18,8 +22,8 @@ export function ProblemTable({
   pageSize,
   onPageChange,
 }: ProblemTableProps) {
-  const totalPages = Math.ceil(totalCount / pageSize);
-  const start = (currentPage - 1) * pageSize + 1;
+  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+  const start = totalCount === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const end = Math.min(currentPage * pageSize, totalCount);
 
   const pageNumbers: (number | "...")[] = [];
@@ -45,7 +49,9 @@ export function ProblemTable({
     <div className="rounded-md border border-outline-variant overflow-hidden">
       <div className="overflow-x-auto">
         {/* Table header */}
-        <div className="grid grid-cols-[80px_minmax(220px,1fr)_110px_110px_minmax(150px,190px)_120px] min-w-195 bg-surface-container-high border-b border-outline-variant">
+        <div
+          className={`grid ${COLUMNS} bg-surface-container-high border-b border-outline-variant`}
+        >
           <div className="px-3 py-3 text-label-caps text-on-surface-variant font-jetbrains-mono text-center">
             STATUS
           </div>
@@ -58,9 +64,6 @@ export function ProblemTable({
           <div className="px-4 py-3 text-label-caps text-on-surface-variant font-jetbrains-mono">
             ACCEPTANCE
           </div>
-          <div className="px-4 py-3 text-label-caps text-on-surface-variant font-jetbrains-mono">
-            TAGS
-          </div>
           <div className="px-4 py-3 text-label-caps text-on-surface-variant font-jetbrains-mono text-right">
             LAST SUBMITTED
           </div>
@@ -70,7 +73,7 @@ export function ProblemTable({
         {problems.map((problem, idx) => (
           <div
             key={problem.id}
-            className={`grid grid-cols-[80px_minmax(220px,1fr)_110px_110px_minmax(150px,190px)_120px] min-w-195 items-center border-b border-outline-variant last:border-b-0 hover:bg-surface-container-high transition-colors ${
+            className={`grid ${COLUMNS} items-center border-b border-outline-variant last:border-b-0 hover:bg-surface-container-high transition-colors ${
               idx % 2 === 0
                 ? "bg-surface-container"
                 : "bg-surface-container-low"
@@ -84,7 +87,7 @@ export function ProblemTable({
             {/* Title */}
             <div className="px-4 py-5">
               <Link
-                to={`/problems/${problem.id}`}
+                to={`/problems/${problem.slug}`}
                 className="text-body-sm font-medium text-on-surface hover:text-primary transition-colors"
               >
                 {problem.id}. {problem.title}
@@ -99,33 +102,27 @@ export function ProblemTable({
             {/* Acceptance */}
             <div className="px-4 py-5">
               <span className="text-code-md text-on-surface-variant font-jetbrains-mono">
-                {problem.acceptance}%
+                {problem.acceptance == null ? "—" : `${problem.acceptance}%`}
               </span>
-            </div>
-
-            {/* Tags */}
-            <div className="px-4 py-5 flex flex-wrap gap-1.5">
-              {problem.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center px-2 py-0.5 text-code-sm rounded bg-surface-container-high text-on-surface-variant border border-outline-variant font-jetbrains-mono whitespace-nowrap"
-                >
-                  {tag}
-                </span>
-              ))}
             </div>
 
             {/* Last Submitted */}
             <div className="px-4 py-5 text-right">
               <span className="text-body-sm text-on-surface-variant whitespace-nowrap">
-                {problem.lastSubmitted ?? "—"}
+                {timeAgo(problem.lastSubmitted)}
               </span>
             </div>
           </div>
         ))}
 
-        {/* Pagination footer */}
+        {problems.length === 0 && (
+          <div className="px-6 py-12 text-center text-body-sm text-on-surface-variant bg-surface-container">
+            No problems match your filters.
+          </div>
+        )}
       </div>
+
+      {/* Pagination footer */}
       <div className="flex items-center justify-between px-4 py-3 bg-surface-container border-t border-outline-variant">
         <span className="text-body-sm text-on-surface-variant">
           Showing {start}–{end} of {totalCount.toLocaleString()} problems

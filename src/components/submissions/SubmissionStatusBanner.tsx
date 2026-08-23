@@ -1,15 +1,16 @@
-import { CheckCircle2, XCircle } from "lucide-react";
-import type { SubmissionResult } from "../../types/submission";
+import { AlertTriangle, CheckCircle2, Loader2, XCircle } from "lucide-react";
+import type { SubmissionDetail } from "../../types/submission";
+import { LANGUAGE_LABELS, STATUS_LABELS, isPendingStatus, timeAgo } from "../../lib/format";
+import { STATUS_ACCENT } from "../../lib/statusTone";
 
 interface SubmissionStatusBannerProps {
-  submission: SubmissionResult;
+  submission: SubmissionDetail;
 }
 
-export function SubmissionStatusBanner({
-  submission,
-}: SubmissionStatusBannerProps) {
-  const accepted = submission.verdict === "Accepted";
-  const accent = accepted ? "--color-tertiary" : "--color-error";
+export function SubmissionStatusBanner({ submission }: SubmissionStatusBannerProps) {
+  const { status } = submission;
+  const accent = STATUS_ACCENT[status];
+  const pending = isPendingStatus(status);
 
   return (
     <div className="bg-surface-container border border-outline-variant rounded-xl overflow-hidden relative">
@@ -26,15 +27,19 @@ export function SubmissionStatusBanner({
               border: `1px solid color-mix(in srgb, var(${accent}) 20%, transparent)`,
             }}
           >
-            {accepted ? (
+            {pending ? (
+              <Loader2 size={36} style={{ color: `var(${accent})` }} className="animate-spin" />
+            ) : status === "ACCEPTED" ? (
               <CheckCircle2
                 size={40}
                 className="text-tertiary"
                 fill="currentColor"
                 fillOpacity={0.15}
               />
+            ) : status === "RUNTIME_ERROR" || status === "SYSTEM_ERROR" ? (
+              <AlertTriangle size={40} style={{ color: `var(${accent})` }} />
             ) : (
-              <XCircle size={40} className="text-error" />
+              <XCircle size={40} style={{ color: `var(${accent})` }} />
             )}
           </div>
           <div>
@@ -42,12 +47,17 @@ export function SubmissionStatusBanner({
               className="text-[32px] font-bold leading-none"
               style={{ color: `var(${accent})` }}
             >
-              {submission.verdict}
+              {STATUS_LABELS[status]}
             </h2>
             <p className="text-on-surface-variant mt-2 text-body-sm">
-              Submitted {submission.submittedAgo} •{" "}
-              <span className="text-on-surface">{submission.language}</span>
+              Submitted {timeAgo(submission.submittedAt)} •{" "}
+              <span className="text-on-surface">{LANGUAGE_LABELS[submission.language]}</span>
             </p>
+            {submission.errorMessage && (
+              <p className="mt-2 text-code-sm font-jetbrains-mono text-error break-all">
+                {submission.errorMessage}
+              </p>
+            )}
           </div>
         </div>
         <div className="text-left sm:text-right">
@@ -55,7 +65,9 @@ export function SubmissionStatusBanner({
             TEST CASES
           </span>
           <span className="text-[32px] font-bold font-geist text-on-surface">
-            {submission.testCasesPassed}/{submission.testCasesTotal}
+            {submission.testCasesTotal === 0
+              ? "—"
+              : `${submission.testCasesPassed}/${submission.testCasesTotal}`}
           </span>
         </div>
       </div>

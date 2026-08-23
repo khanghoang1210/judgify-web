@@ -1,47 +1,67 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Maximize2, RefreshCw, Settings, TerminalSquare } from "lucide-react";
+import { Loader2, Maximize2, RefreshCw, Settings, TerminalSquare } from "lucide-react";
 import CodeMirror from "@uiw/react-codemirror";
 import type { Extension } from "@codemirror/state";
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
-import { java } from "@codemirror/lang-java";
-import type { ProblemDetail } from "../../types/problemDetail";
+import type { ApiLanguage, ProblemDetailResponse, TestCaseResponse } from "../../types/api";
+import { useAuth } from "../../lib/auth/authContext";
+import { createSubmission } from "../../lib/api/endpoints";
+import { ApiError } from "../../lib/api/client";
+import { LANGUAGE_LABELS } from "../../lib/format";
+import { EDITOR_GRAMMAR, STARTER_CODE } from "../../lib/starterCode";
 import { judgifyTheme, judgifyHighlighting } from "./editorTheme";
 
 interface CodeEditorPanelProps {
-  problem: ProblemDetail;
+  problem: ProblemDetailResponse;
+  /** Sample cases only; hidden ones are never sent to the browser. */
+  sampleTestCases: TestCaseResponse[];
 }
 
-type BottomTab = "testcase" | "result";
+/** The judge engine only supports these two. */
+const LANGUAGES: ApiLanguage[] = ["PYTHON3", "CPP17"];
 
-/** Maps a language value to its CodeMirror grammar (empty = no highlighting). */
-function langExtension(language: string): Extension[] {
-  switch (language) {
-    case "python":
-      return [python()];
-    case "cpp":
-      return [cpp()];
-    case "java":
-      return [java()];
-    default:
-      return [];
-  }
+function langExtension(language: ApiLanguage): Extension[] {
+  return EDITOR_GRAMMAR[language] === "python" ? [python()] : [cpp()];
 }
 
-export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
+export function CodeEditorPanel({ problem, sampleTestCases }: CodeEditorPanelProps) {
   const navigate = useNavigate();
-  const [language, setLanguage] = useState(
-    problem.languages[2]?.value ?? "python",
-  );
-  const [code, setCode] = useState(problem.starterCode);
-  const [bottomTab, setBottomTab] = useState<BottomTab>("testcase");
+  const { session } = useAuth();
+  const [language, setLanguage] = useState<ApiLanguage>("PYTHON3");
+  const [code, setCode] = useState(STARTER_CODE.PYTHON3);
   const [activeCase, setActiveCase] = useState(0);
   const [bottomHeight, setBottomHeight] = useState(34); // percentage
   const [isDragging, setIsDragging] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const testCase = problem.testCases[activeCase];
+  const testCase = sampleTestCases[activeCase];
+
+  /** Switching language swaps in that language's skeleton. */
+  function changeLanguage(next: ApiLanguage) {
+    setLanguage(next);
+    setCode((current) => (current === STARTER_CODE[language] ? STARTER_CODE[next] : current));
+  }
+
+  async function handleSubmit() {
+    if (!session) {
+      navigate("/login", { state: { from: `/problems/${problem.slug}` } });
+      return;
+    }
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const submission = await createSubmission(problem.id, { language, sourceCode: code });
+      navigate(`/submissions/${submission.id}`);
+    } catch (cause) {
+      setSubmitError(cause instanceof ApiError ? cause.message : "Could not submit.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -80,12 +100,12 @@ export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
           <div className="relative">
             <select
               value={language}
-              onChange={(e) => setLanguage(e.target.value)}
+              onChange={(e) => changeLanguage(e.target.value as ApiLanguage)}
               className="appearance-none bg-surface-container-high text-on-surface text-body-sm rounded px-3 pr-8 py-1.5 font-medium cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary"
             >
-              {problem.languages.map((lang) => (
-                <option key={lang.value} value={lang.value}>
-                  {lang.label}
+              {LANGUAGES.map((value) => (
+                <option key={value} value={value}>
+                  {LANGUAGE_LABELS[value]}
                 </option>
               ))}
             </select>
@@ -107,7 +127,7 @@ export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
         </div>
         <div className="flex items-center gap-1">
           <button
-            onClick={() => setCode(problem.starterCode)}
+            onClick={() => setCode(STARTER_CODE[language])}
             title="Reset code"
             className="p-1.5 text-on-surface-variant hover:text-primary transition-colors"
           >
@@ -156,39 +176,32 @@ export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-1 w-10 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
       </div>
 
-      {/* Test cases */}
+      {/* Sample test cases */}
       <div
         className="min-h-0 bg-surface flex flex-col"
         style={{ height: `${bottomHeight}%` }}
       >
         <div className="px-4 py-2 bg-surface-container-low flex items-center justify-between border-b border-outline-variant">
-          <div className="flex items-center gap-4">
-            {(["testcase", "result"] as BottomTab[]).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setBottomTab(tab)}
-                className={`text-body-sm font-medium py-1 border-b-2 capitalize transition-colors ${
-                  bottomTab === tab
-                    ? "text-primary border-primary"
-                    : "text-on-surface-variant border-transparent hover:text-on-surface"
-                }`}
-              >
-                {tab === "testcase" ? "Testcase" : "Result"}
-              </button>
-            ))}
-          </div>
+          <span className="text-body-sm font-medium py-1 border-b-2 text-primary border-primary">
+            Sample cases
+          </span>
           <span className="text-label-caps text-on-surface-variant uppercase font-jetbrains-mono">
-            Ready to run
+            stdin → stdout
           </span>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4">
-          {bottomTab === "testcase" ? (
+          {sampleTestCases.length === 0 ? (
+            <div className="h-full flex items-center justify-center text-center text-body-sm text-on-surface-variant px-6">
+              {/* The only test-case endpoint is admin-scoped. */}
+              Sample cases are only served to admin accounts right now.
+            </div>
+          ) : (
             <>
-              <div className="flex gap-2 mb-4">
-                {problem.testCases.map((tc, idx) => (
+              <div className="flex gap-2 mb-4 flex-wrap">
+                {sampleTestCases.map((sample, idx) => (
                   <button
-                    key={tc.name}
+                    key={sample.id}
                     onClick={() => setActiveCase(idx)}
                     className={`px-3 py-1 bg-surface-container-high rounded text-body-sm transition-colors ${
                       activeCase === idx
@@ -196,57 +209,55 @@ export function CodeEditorPanel({ problem }: CodeEditorPanelProps) {
                         : "text-on-surface-variant border border-transparent hover:border-outline-variant"
                     }`}
                   >
-                    {tc.name}
+                    Case {idx + 1}
                   </button>
                 ))}
               </div>
-              <div className="space-y-4">
-                <div>
-                  <p className="text-label-caps text-on-surface-variant mb-1 font-jetbrains-mono uppercase">
-                    Methods
-                  </p>
-                  <div className="bg-surface-container-low p-2 rounded font-jetbrains-mono text-code-md text-on-surface border border-outline-variant/30 break-all">
-                    {testCase.methods}
+              {testCase && (
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-label-caps text-on-surface-variant mb-1 font-jetbrains-mono uppercase">
+                      Input
+                    </p>
+                    <pre className="bg-surface-container-low p-2 rounded font-jetbrains-mono text-code-md text-on-surface border border-outline-variant/30 whitespace-pre-wrap break-all">
+                      {testCase.input}
+                    </pre>
+                  </div>
+                  <div>
+                    <p className="text-label-caps text-on-surface-variant mb-1 font-jetbrains-mono uppercase">
+                      Expected output
+                    </p>
+                    <pre className="bg-surface-container-low p-2 rounded font-jetbrains-mono text-code-md text-on-surface border border-outline-variant/30 whitespace-pre-wrap break-all">
+                      {testCase.expectedOutput}
+                    </pre>
                   </div>
                 </div>
-                <div>
-                  <p className="text-label-caps text-on-surface-variant mb-1 font-jetbrains-mono uppercase">
-                    Arguments
-                  </p>
-                  <div className="bg-surface-container-low p-2 rounded font-jetbrains-mono text-code-md text-on-surface border border-outline-variant/30 break-all">
-                    {testCase.args}
-                  </div>
-                </div>
-              </div>
+              )}
             </>
-          ) : (
-            <div className="h-full flex items-center justify-center text-body-sm text-on-surface-variant">
-              Run your code to see the results.
-            </div>
           )}
         </div>
       </div>
 
       {/* Footer */}
-      <div className="h-16 bg-surface-container-low border-t border-outline-variant flex items-center justify-between px-6">
-        <button className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface transition-colors">
-          <TerminalSquare size={18} />
-          <span className="text-body-sm font-medium">Console</span>
-        </button>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setBottomTab("result")}
-            className="px-6 py-2 rounded-lg bg-surface-container-high text-on-surface font-semibold border border-outline-variant hover:bg-surface-bright transition-all"
-          >
-            Run
-          </button>
-          <button
-            onClick={() => navigate(`/submissions/${problem.id}`)}
-            className="px-8 py-2 rounded-lg bg-primary-container text-on-primary-container font-bold hover:opacity-90 transition-all"
-          >
-            Submit
-          </button>
+      <div className="h-16 bg-surface-container-low border-t border-outline-variant flex items-center justify-between px-6 gap-4">
+        <div
+          className={`flex items-center gap-2 min-w-0 ${
+            submitError ? "text-error" : "text-on-surface-variant"
+          }`}
+        >
+          <TerminalSquare size={18} className="shrink-0" />
+          <span className="text-body-sm truncate">
+            {submitError ?? (session ? "Submits to the judge queue" : "Sign in to submit")}
+          </span>
         </div>
+        <button
+          onClick={handleSubmit}
+          disabled={submitting}
+          className="shrink-0 px-8 py-2 rounded-lg bg-primary-container text-on-primary-container font-bold hover:opacity-90 transition-all disabled:opacity-60 disabled:cursor-not-allowed inline-flex items-center gap-2"
+        >
+          {submitting && <Loader2 size={16} className="animate-spin" />}
+          {submitting ? "Submitting…" : "Submit"}
+        </button>
       </div>
     </section>
   );

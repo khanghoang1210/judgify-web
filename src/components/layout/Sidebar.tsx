@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../lib/auth/authContext";
 import {
   LayoutDashboard,
   Code2,
@@ -21,6 +22,8 @@ const mainNavItems = [
 ];
 
 export function Sidebar() {
+  const { session } = useAuth();
+
   return (
     <aside className="w-48 bg-surface-container-low border-r border-outline-variant flex flex-col">
       {/* Logo */}
@@ -28,7 +31,9 @@ export function Sidebar() {
         <h1 className="text-xl font-bold font-geist text-on-surface">
           Judgify
         </h1>
-        <p className="text-xs text-on-surface-variant mt-0.5">Pro Developer</p>
+        <p className="text-xs text-on-surface-variant mt-0.5">
+          {session ? session.username : "Signed out"}
+        </p>
       </div>
 
       {/* Main Navigation */}

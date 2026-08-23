@@ -10,4 +10,14 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
+  server: {
+    // Keeps the browser same-origin with the Spring API, so the backend needs no
+    // CORS configuration for local development.
+    proxy: {
+      '/api': {
+        target: process.env.JUDGIFY_API_URL ?? 'http://localhost:8080',
+        changeOrigin: true,
+      },
+    },
+  },
 })

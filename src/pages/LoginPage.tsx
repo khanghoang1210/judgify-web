@@ -1,20 +1,40 @@
 import { useState } from "react";
-import { Eye, EyeOff, Mail, Lock, TerminalIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff, User, Lock, Loader2, TerminalIcon } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../lib/auth/authContext";
+import { ApiError } from "../lib/api/client";
+
+interface LocationState {
+  from?: string;
+}
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
     rememberMe: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /** The API authenticates by username, not email. */
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Handle login
-    console.log("Login:", formData);
+    setSubmitting(true);
+    setError(null);
+    try {
+      await signIn({ username: formData.username.trim(), password: formData.password });
+      const from = (location.state as LocationState | null)?.from;
+      navigate(from ?? "/", { replace: true });
+    } catch (cause) {
+      setError(cause instanceof ApiError ? cause.message : "Could not sign in.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -65,24 +85,25 @@ export function LoginPage() {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Email */}
+              {/* Username */}
               <div>
                 <label className="block text-body-sm font-medium text-on-surface mb-2">
-                  Email Address
+                  Username
                 </label>
                 <div className="relative">
-                  <Mail
+                  <User
                     size={18}
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
                   />
                   <input
-                    type="email"
-                    value={formData.email}
+                    type="text"
+                    value={formData.username}
                     onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
+                      setFormData({ ...formData, username: e.target.value })
                     }
+                    autoComplete="username"
                     className="w-full h-11 pl-10 pr-4 bg-surface-container-high border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
-                    placeholder="you@example.com"
+                    placeholder="your-username"
                     required
                   />
                 </div>
@@ -105,6 +126,7 @@ export function LoginPage() {
                       setFormData({ ...formData, password: e.target.value })
                     }
                     className="w-full h-11 pl-10 pr-10 bg-surface-container-high border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
+                    autoComplete="current-password"
                     placeholder="Enter your password"
                     required
                   />
@@ -142,12 +164,20 @@ export function LoginPage() {
                 </a>
               </div>
 
+              {error && (
+                <p className="text-body-sm text-error bg-error-container/20 border border-error/30 rounded-md px-3 py-2">
+                  {error}
+                </p>
+              )}
+
               {/* Submit button */}
               <button
                 type="submit"
-                className="w-full h-11 bg-primary-container text-on-primary-container font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2"
+                disabled={submitting}
+                className="w-full h-11 bg-primary-container text-on-primary-container font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Sign In
+                {submitting ? <Loader2 size={16} className="animate-spin" /> : null}
+                {submitting ? "Signing in…" : "Sign In"}
                 <svg
                   width="16"
                   height="16"

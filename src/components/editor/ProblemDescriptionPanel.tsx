@@ -1,10 +1,26 @@
 import { useState } from "react";
-import { BookOpen, FileText, History, Lightbulb } from "lucide-react";
+import { BookOpen, Clock, Cpu, FileText, History, Lightbulb } from "lucide-react";
 import type { ReactNode } from "react";
-import type { ProblemDetail } from "../../types/problemDetail";
+import { Link } from "react-router-dom";
+import type { ProblemDetailResponse, SubmissionResponse } from "../../types/api";
+import {
+  LANGUAGE_LABELS,
+  formatMemory,
+  formatMemoryLimit,
+  formatRuntime,
+  formatTimeLimit,
+  timeAgo,
+  toDifficulty,
+} from "../../lib/format";
+import { Markdown } from "../markdown/Markdown";
+import { DifficultyBadge } from "../problems/DifficultyBadge";
+import { StatusBadge } from "../submissions/StatusBadge";
 
 interface ProblemDescriptionPanelProps {
-  problem: ProblemDetail;
+  problem: ProblemDetailResponse;
+  /** Your own submissions for this problem, newest first. */
+  submissions: SubmissionResponse[];
+  submissionsLoading: boolean;
 }
 
 type TabId = "description" | "editorial" | "solutions" | "submissions";
@@ -18,6 +34,8 @@ const tabs: { id: TabId; label: string; icon: ReactNode }[] = [
 
 export function ProblemDescriptionPanel({
   problem,
+  submissions,
+  submissionsLoading,
 }: ProblemDescriptionPanelProps) {
   const [activeTab, setActiveTab] = useState<TabId>("description");
 
@@ -43,78 +61,75 @@ export function ProblemDescriptionPanel({
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-6">
-        {activeTab === "description" ? (
+        {activeTab === "description" && (
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-headline-md font-semibold font-geist text-on-surface mb-4">
-              {problem.number}. {problem.title}
-            </h2>
-
-            <p className="text-on-surface-variant leading-relaxed mb-6">
-              Design a data structure that follows the constraints of a{" "}
-              <strong className="text-on-surface">
-                Least Recently Used (LRU) cache
-              </strong>
-              .
-            </p>
-
-            <p className="text-on-surface-variant leading-relaxed mb-4">
-              {problem.methodsIntro}
-            </p>
-            <ul className="list-disc pl-5 text-on-surface-variant space-y-2 mb-6">
-              {problem.methods.map((method) => (
-                <li key={method.signature}>
-                  <code className="text-primary font-jetbrains-mono text-code-md">
-                    {method.signature}
-                  </code>{" "}
-                  {method.description}
-                </li>
-              ))}
-            </ul>
-
-            {/* Example */}
-            <div className="bg-surface-container-high rounded-xl p-6 mb-8 border border-outline-variant">
-              <h3 className="text-headline-sm font-semibold font-geist text-primary mb-4">
-                Example 1
-              </h3>
-              <div className="font-jetbrains-mono text-code-md space-y-4">
-                <div className="bg-surface-container-low p-4 rounded border border-outline-variant/30">
-                  <p className="text-primary mb-1">Input</p>
-                  {problem.example.input.map((line, idx) => (
-                    <p key={idx} className="text-on-surface break-all">
-                      {line}
-                    </p>
-                  ))}
-                </div>
-                <div className="bg-surface-container-low p-4 rounded border border-outline-variant/30">
-                  <p className="text-primary mb-1">Output</p>
-                  <p className="text-on-surface break-all">
-                    {problem.example.output}
-                  </p>
-                </div>
-                <div className="pt-2">
-                  <p className="text-primary mb-1">Explanation</p>
-                  <div className="text-on-surface-variant text-body-sm leading-relaxed space-y-1">
-                    {problem.example.explanation.map((line, idx) => (
-                      <p key={idx}>{line}</p>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <div className="flex items-center gap-3 mb-4 flex-wrap">
+              <h2 className="text-headline-md font-semibold font-geist text-on-surface">
+                {problem.id}. {problem.title}
+              </h2>
+              <DifficultyBadge difficulty={toDifficulty(problem.difficulty)} />
             </div>
 
-            {/* Constraints */}
-            <div className="mb-4">
-              <h3 className="text-headline-sm font-semibold font-geist text-on-surface mb-3">
-                Constraints
-              </h3>
-              <ul className="list-disc pl-5 text-on-surface-variant font-jetbrains-mono text-code-md space-y-1">
-                {problem.constraints.map((constraint) => (
-                  <li key={constraint}>{constraint}</li>
+            {/* Judge limits */}
+            <div className="flex flex-wrap gap-3 mb-6">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-surface-container-high border border-outline-variant text-code-sm font-jetbrains-mono text-on-surface-variant">
+                <Clock size={14} className="text-primary" />
+                {formatTimeLimit(problem.timeLimitMs)}
+              </span>
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-surface-container-high border border-outline-variant text-code-sm font-jetbrains-mono text-on-surface-variant">
+                <Cpu size={14} className="text-primary" />
+                {formatMemoryLimit(problem.memoryLimitMb)}
+              </span>
+            </div>
+
+            {problem.description ? (
+              <Markdown source={problem.description} />
+            ) : (
+              <p className="text-on-surface-variant">
+                This problem has no description yet.
+              </p>
+            )}
+          </div>
+        )}
+
+        {activeTab === "submissions" && (
+          <div className="max-w-3xl mx-auto">
+            {submissionsLoading ? (
+              <p className="text-body-sm text-on-surface-variant">Loading your submissions…</p>
+            ) : submissions.length === 0 ? (
+              <p className="text-body-sm text-on-surface-variant">
+                You have not submitted to this problem yet.
+              </p>
+            ) : (
+              <ul className="divide-y divide-outline-variant border border-outline-variant rounded-lg overflow-hidden">
+                {submissions.map((submission) => (
+                  <li key={submission.id}>
+                    <Link
+                      to={`/submissions/${submission.id}`}
+                      className="flex items-center gap-4 px-4 py-3 bg-surface-container hover:bg-surface-container-high transition-colors"
+                    >
+                      <StatusBadge status={submission.status} />
+                      <span className="ml-auto text-code-sm font-jetbrains-mono text-on-surface-variant">
+                        {LANGUAGE_LABELS[submission.language]}
+                      </span>
+                      <span className="text-code-sm font-jetbrains-mono text-on-surface-variant w-16 text-right">
+                        {formatRuntime(submission.executionTimeMs)}
+                      </span>
+                      <span className="text-code-sm font-jetbrains-mono text-on-surface-variant w-20 text-right">
+                        {formatMemory(submission.memoryUsedKb)}
+                      </span>
+                      <span className="text-body-sm text-on-surface-variant w-32 text-right">
+                        {timeAgo(submission.createdAt)}
+                      </span>
+                    </Link>
+                  </li>
                 ))}
               </ul>
-            </div>
+            )}
           </div>
-        ) : (
+        )}
+
+        {(activeTab === "editorial" || activeTab === "solutions") && (
           <div className="h-full flex items-center justify-center text-on-surface-variant">
             Nothing here yet.
           </div>

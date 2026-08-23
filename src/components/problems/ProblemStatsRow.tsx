@@ -61,7 +61,7 @@ export function ProblemStatsRow({
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((stat) => {
-        const pct = Math.round((stat.solved / stat.total) * 100);
+        const pct = stat.total === 0 ? 0 : Math.round((stat.solved / stat.total) * 100);
         return (
           <div
             key={stat.label}

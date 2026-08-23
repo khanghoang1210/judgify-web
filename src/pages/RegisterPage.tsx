@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { Eye, EyeOff, Mail, User, Lock, TerminalIcon } from "lucide-react";
+import { Eye, EyeOff, Mail, User, Lock, Loader2, TerminalIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../lib/auth/authContext";
+import { ApiError } from "../lib/api/client";
 
 export function RegisterPage() {
   const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -12,10 +17,23 @@ export function RegisterPage() {
     agreedToTerms: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /** Registering signs you straight in — the API returns a token. */
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Handle registration
-    console.log("Register:", formData);
+    setSubmitting(true);
+    setError(null);
+    try {
+      await signUp({
+        username: formData.username.trim(),
+        email: formData.email.trim(),
+        password: formData.password,
+      });
+      navigate("/", { replace: true });
+    } catch (cause) {
+      setError(cause instanceof ApiError ? cause.message : "Could not create the account.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -84,6 +102,11 @@ export function RegisterPage() {
                       setFormData({ ...formData, username: e.target.value })
                     }
                     className="w-full h-11 pl-10 pr-4 bg-surface-container-high border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
+                    autoComplete="username"
+                    minLength={3}
+                    maxLength={50}
+                    pattern="[A-Za-z0-9_\-]+"
+                    title="Letters, numbers, hyphens and underscores only"
                     placeholder="Choose a username"
                     required
                   />
@@ -130,6 +153,8 @@ export function RegisterPage() {
                       setFormData({ ...formData, password: e.target.value })
                     }
                     className="w-full h-11 pl-10 pr-10 bg-surface-container-high border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
+                    autoComplete="new-password"
+                    minLength={8}
                     placeholder="Create a strong password"
                     required
                   />
@@ -142,7 +167,7 @@ export function RegisterPage() {
                   </button>
                 </div>
                 <p className="text-code-sm text-on-surface-variant mt-1.5">
-                  At least 8 characters, one number, and one symbol.
+                  At least 8 characters.
                 </p>
               </div>
 
@@ -184,12 +209,20 @@ export function RegisterPage() {
                 </label>
               </div>
 
+              {error && (
+                <p className="text-body-sm text-error bg-error-container/20 border border-error/30 rounded-md px-3 py-2">
+                  {error}
+                </p>
+              )}
+
               {/* Submit button */}
               <button
                 type="submit"
-                className="w-full h-11 bg-primary-container text-on-primary-container font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2"
+                disabled={submitting}
+                className="w-full h-11 bg-primary-container text-on-primary-container font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Create Account
+                {submitting ? <Loader2 size={16} className="animate-spin" /> : null}
+                {submitting ? "Creating account…" : "Create Account"}
                 <svg
                   width="16"
                   height="16"
