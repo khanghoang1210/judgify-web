@@ -10,10 +10,15 @@ coding-problem platform. The UI reads live data from the Judgify Spring API.
 docker compose up -d          # MySQL 8 on :3306
 ./gradlew :api:bootRun        # REST API on :8080
 
-# 2. Seed demo data (idempotent; wipes and reseeds by default)
+# 2. Seed demo data — with the judge worker stopped, or it will re-judge the
+#    seeded history and overwrite its backdated verdicts
 npm run seed                  # or: npm run seed -- --keep
 
-# 3. Start the frontend
+# 3. Start the judge worker, so new submissions actually get judged
+docker pull python:3.12-slim && docker pull gcc:13.3   # once
+./gradlew :worker:bootRun
+
+# 4. Start the frontend
 npm run dev                   # http://localhost:5173
 ```
 
@@ -44,6 +49,9 @@ the problem list plus one submission list per problem.
 Still mock, because there is no endpoint for it: the leaderboard
 (`src/data/leaderboard.ts`) and the skill matrix / achievement badges
 (`src/data/placeholders.ts`).
+
+Two fields render as `—` by design: memory usage, which the Docker sandbox does
+not measure, and the submitted source code, which the API does not return.
 
 ## Scripts
 

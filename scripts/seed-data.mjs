@@ -6,9 +6,12 @@
  * cases, submissions). Two things have no endpoint and are done with SQL against
  * the dev MySQL container instead:
  *   - promoting the seed admin to ROLE ADMIN (register always creates USER)
- *   - marking submissions as judged (the worker is still a no-op, so submissions
- *     would otherwise sit in PENDING forever and every verdict in the UI would
- *     be blank)
+ *   - backdating submissions into a judged history spread over the past weeks,
+ *     which is what makes the streak, heatmap and acceptance figures look real
+ *
+ * Run this with the judge worker STOPPED. The worker polls every second, and it
+ * would judge these submissions for real — overwriting the seeded verdicts and
+ * timestamps. Once seeded, start the worker and new submissions get real verdicts.
  *
  * Usage:
  *   node scripts/seed-data.mjs            # wipe + reseed
