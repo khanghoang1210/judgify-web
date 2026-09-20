@@ -5,18 +5,23 @@ import CodeMirror from "@uiw/react-codemirror";
 import type { Extension } from "@codemirror/state";
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
-import type { ApiLanguage, ProblemDetailResponse, TestCaseResponse } from "../../types/api";
+import type { ApiLanguage, ProblemDetailResponse, SampleTestCase } from "../../types/api";
 import { useAuth } from "../../lib/auth/authContext";
 import { createSubmission } from "../../lib/api/endpoints";
 import { ApiError } from "../../lib/api/client";
 import { LANGUAGE_LABELS } from "../../lib/format";
-import { EDITOR_GRAMMAR, STARTER_CODE } from "../../lib/starterCode";
 import { judgifyTheme, judgifyHighlighting } from "./editorTheme";
+
+/** CodeMirror grammar key per backend language. */
+const EDITOR_GRAMMAR: Record<ApiLanguage, "python" | "cpp"> = {
+  PYTHON3: "python",
+  CPP17: "cpp",
+};
 
 interface CodeEditorPanelProps {
   problem: ProblemDetailResponse;
   /** Sample cases only; hidden ones are never sent to the browser. */
-  sampleTestCases: TestCaseResponse[];
+  sampleTestCases: SampleTestCase[];
 }
 
 /** The judge engine only supports these two. */
@@ -30,7 +35,7 @@ export function CodeEditorPanel({ problem, sampleTestCases }: CodeEditorPanelPro
   const navigate = useNavigate();
   const { session } = useAuth();
   const [language, setLanguage] = useState<ApiLanguage>("PYTHON3");
-  const [code, setCode] = useState(STARTER_CODE.PYTHON3);
+  const [code, setCode] = useState(problem.starterCode.PYTHON3);
   const [activeCase, setActiveCase] = useState(0);
   const [bottomHeight, setBottomHeight] = useState(34); // percentage
   const [isDragging, setIsDragging] = useState(false);
@@ -43,7 +48,9 @@ export function CodeEditorPanel({ problem, sampleTestCases }: CodeEditorPanelPro
   /** Switching language swaps in that language's skeleton. */
   function changeLanguage(next: ApiLanguage) {
     setLanguage(next);
-    setCode((current) => (current === STARTER_CODE[language] ? STARTER_CODE[next] : current));
+    setCode((current) =>
+      current === problem.starterCode[language] ? problem.starterCode[next] : current,
+    );
   }
 
   async function handleSubmit() {
@@ -122,19 +129,19 @@ export function CodeEditorPanel({ problem, sampleTestCases }: CodeEditorPanelPro
             </span>
           </div>
           <button className="p-1.5 text-on-surface-variant hover:text-primary transition-colors">
-            <Settings size={18} />
+            <Settings size={16} />
           </button>
         </div>
         <div className="flex items-center gap-1">
           <button
-            onClick={() => setCode(STARTER_CODE[language])}
+            onClick={() => setCode(problem.starterCode[language])}
             title="Reset code"
             className="p-1.5 text-on-surface-variant hover:text-primary transition-colors"
           >
-            <RefreshCw size={18} />
+            <RefreshCw size={16} />
           </button>
           <button className="p-1.5 text-on-surface-variant hover:text-primary transition-colors">
-            <Maximize2 size={18} />
+            <Maximize2 size={16} />
           </button>
         </div>
       </div>
@@ -173,7 +180,7 @@ export function CodeEditorPanel({ problem, sampleTestCases }: CodeEditorPanelPro
         {/* Wider invisible hit area */}
         <div className="absolute inset-x-0 -top-1.5 -bottom-1.5" />
         {/* Visual pill on hover */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-1 w-10 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-1 w-9 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
       </div>
 
       {/* Sample test cases */}
@@ -181,20 +188,19 @@ export function CodeEditorPanel({ problem, sampleTestCases }: CodeEditorPanelPro
         className="min-h-0 bg-surface flex flex-col"
         style={{ height: `${bottomHeight}%` }}
       >
-        <div className="px-4 py-2 bg-surface-container-low flex items-center justify-between border-b border-outline-variant">
+        <div className="px-3 py-1.5 bg-surface-container-low flex items-center justify-between border-b border-outline-variant">
           <span className="text-body-sm font-medium py-1 border-b-2 text-primary border-primary">
             Sample cases
           </span>
           <span className="text-label-caps text-on-surface-variant uppercase font-jetbrains-mono">
-            stdin → stdout
+            {problem.functionName}
           </span>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4">
           {sampleTestCases.length === 0 ? (
-            <div className="h-full flex items-center justify-center text-center text-body-sm text-on-surface-variant px-6">
-              {/* The only test-case endpoint is admin-scoped. */}
-              Sample cases are only served to admin accounts right now.
+            <div className="h-full flex items-center justify-center text-center text-body-sm text-on-surface-variant px-4">
+              This problem has no sample cases yet.
             </div>
           ) : (
             <>
@@ -214,21 +220,23 @@ export function CodeEditorPanel({ problem, sampleTestCases }: CodeEditorPanelPro
                 ))}
               </div>
               {testCase && (
-                <div className="space-y-4">
+                <div className="space-y-3">
+                  {problem.params.map((param, index) => (
+                    <div key={param.name}>
+                      <p className="text-label-caps text-on-surface-variant mb-1 font-jetbrains-mono uppercase">
+                        {param.name}
+                      </p>
+                      <pre className="bg-surface-container-low p-2 rounded font-jetbrains-mono text-code-md text-on-surface border border-outline-variant/30 whitespace-pre-wrap break-all">
+                        {JSON.stringify(testCase.args[index])}
+                      </pre>
+                    </div>
+                  ))}
                   <div>
                     <p className="text-label-caps text-on-surface-variant mb-1 font-jetbrains-mono uppercase">
-                      Input
+                      Expected
                     </p>
                     <pre className="bg-surface-container-low p-2 rounded font-jetbrains-mono text-code-md text-on-surface border border-outline-variant/30 whitespace-pre-wrap break-all">
-                      {testCase.input}
-                    </pre>
-                  </div>
-                  <div>
-                    <p className="text-label-caps text-on-surface-variant mb-1 font-jetbrains-mono uppercase">
-                      Expected output
-                    </p>
-                    <pre className="bg-surface-container-low p-2 rounded font-jetbrains-mono text-code-md text-on-surface border border-outline-variant/30 whitespace-pre-wrap break-all">
-                      {testCase.expectedOutput}
+                      {JSON.stringify(testCase.expected)}
                     </pre>
                   </div>
                 </div>
@@ -239,13 +247,13 @@ export function CodeEditorPanel({ problem, sampleTestCases }: CodeEditorPanelPro
       </div>
 
       {/* Footer */}
-      <div className="h-16 bg-surface-container-low border-t border-outline-variant flex items-center justify-between px-6 gap-4">
+      <div className="h-14 bg-surface-container-low border-t border-outline-variant flex items-center justify-between px-4 gap-4">
         <div
           className={`flex items-center gap-2 min-w-0 ${
             submitError ? "text-error" : "text-on-surface-variant"
           }`}
         >
-          <TerminalSquare size={18} className="shrink-0" />
+          <TerminalSquare size={16} className="shrink-0" />
           <span className="text-body-sm truncate">
             {submitError ?? (session ? "Submits to the judge queue" : "Sign in to submit")}
           </span>
@@ -253,7 +261,7 @@ export function CodeEditorPanel({ problem, sampleTestCases }: CodeEditorPanelPro
         <button
           onClick={handleSubmit}
           disabled={submitting}
-          className="shrink-0 px-8 py-2 rounded-lg bg-primary-container text-on-primary-container font-bold hover:opacity-90 transition-all disabled:opacity-60 disabled:cursor-not-allowed inline-flex items-center gap-2"
+          className="shrink-0 px-4 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-bold hover:opacity-90 transition-all disabled:opacity-60 disabled:cursor-not-allowed inline-flex items-center gap-2"
         >
           {submitting && <Loader2 size={16} className="animate-spin" />}
           {submitting ? "Submitting…" : "Submit"}

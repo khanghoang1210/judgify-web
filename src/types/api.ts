@@ -47,6 +47,21 @@ export interface ProblemSummary {
   difficulty: ApiDifficulty;
 }
 
+export interface ParamSpec {
+  name: string;
+  /** A type in the judge's grammar, e.g. "int[]" or "TreeNode". */
+  type: string;
+}
+
+/** A sample test case. Hidden cases are never served. */
+export interface SampleTestCase {
+  id: number;
+  /** One element per parameter, in declaration order. */
+  args: unknown[];
+  expected: unknown;
+  orderIndex: number | null;
+}
+
 /** `GET /problems/{slug}` — the full problem, `description` is Markdown. */
 export interface ProblemDetailResponse {
   id: number;
@@ -59,14 +74,20 @@ export interface ProblemDetailResponse {
   published: boolean;
   createdAt: string;
   updatedAt: string;
+  functionName: string;
+  params: ParamSpec[];
+  returnType: string;
+  /** Generated from the signature by the API, so it always matches the judge. */
+  starterCode: Record<ApiLanguage, string>;
+  samples: SampleTestCase[];
 }
 
 /** Admin-only: hidden test cases are never exposed to regular users. */
 export interface TestCaseResponse {
   id: number;
   problemId: number;
-  input: string;
-  expectedOutput: string;
+  args: unknown[];
+  expected: unknown;
   sample: boolean;
   orderIndex: number | null;
   createdAt: string;

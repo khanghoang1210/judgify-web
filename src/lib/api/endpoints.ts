@@ -6,7 +6,6 @@ import type {
   RegisterPayload,
   SubmissionCreatePayload,
   SubmissionResponse,
-  TestCaseResponse,
 } from "../../types/api";
 import { apiGet, apiPost } from "./client";
 
@@ -27,13 +26,6 @@ export const listProblems = (signal?: AbortSignal) =>
 /** Public: the backend addresses problem detail by slug, not id. */
 export const getProblem = (slug: string, signal?: AbortSignal) =>
   apiGet<ProblemDetailResponse>(`/problems/${encodeURIComponent(slug)}`, { auth: false, signal });
-
-/**
- * Admin-only. There is no public sample-test-case endpoint yet, so callers must
- * tolerate a 403 for regular users.
- */
-export const listTestCases = (problemId: number, signal?: AbortSignal) =>
-  apiGet<TestCaseResponse[]>(`/admin/problems/${problemId}/test-cases`, { signal });
 
 /* --------------------------------------------------------------- submissions */
 

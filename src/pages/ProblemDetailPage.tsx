@@ -1,11 +1,11 @@
 import { useRef, useEffect, useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProblem, listProblemSubmissions, listTestCases } from "../lib/api/endpoints";
+import { getProblem, listProblemSubmissions } from "../lib/api/endpoints";
 import { useAuth } from "../lib/auth/authContext";
 import { useAsync } from "../hooks/useAsync";
 import { toDifficulty } from "../lib/format";
-import type { SubmissionResponse, TestCaseResponse } from "../types/api";
+import type { SubmissionResponse } from "../types/api";
 import { DifficultyBadge } from "../components/problems/DifficultyBadge";
 import { ProblemDescriptionPanel } from "../components/editor/ProblemDescriptionPanel";
 import { CodeEditorPanel } from "../components/editor/CodeEditorPanel";
@@ -24,18 +24,6 @@ export function ProblemDetailPage() {
   const problemId = problem?.id ?? null;
   const userId = session?.userId ?? null;
 
-  /**
-   * Test cases only have an admin endpoint, so a regular user gets a 403 here.
-   * That is expected — the editor simply shows no sample cases for them.
-   */
-  const testCaseState = useAsync<TestCaseResponse[]>(
-    (signal) =>
-      problemId == null || userId == null
-        ? Promise.resolve([])
-        : listTestCases(problemId, signal).catch(() => []),
-    [problemId, userId],
-  );
-
   const submissionState = useAsync<SubmissionResponse[]>(
     (signal) =>
       problemId == null || userId == null
@@ -45,7 +33,6 @@ export function ProblemDetailPage() {
   );
 
   const mySubmissions = (submissionState.data ?? []).filter((s) => s.userId === userId);
-  const sampleTestCases = (testCaseState.data ?? []).filter((testCase) => testCase.sample);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -73,7 +60,7 @@ export function ProblemDetailPage() {
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-background">
       {/* ── Unified header (replaces Topbar + sub-header) ── */}
-      <header className="h-16 shrink-0 bg-background border-b border-outline-variant flex items-center gap-4 px-6">
+      <header className="h-14 shrink-0 bg-background border-b border-outline-variant flex items-center gap-4 px-4">
         {/* Left: back · brand · problem title · difficulty */}
         <div className="flex items-center gap-3">
           <button
@@ -81,7 +68,7 @@ export function ProblemDetailPage() {
             className="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors rounded-md"
             title="Back to problems"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={18} />
           </button>
 
           <span className="text-headline-sm font-bold font-geist text-primary">
@@ -108,7 +95,7 @@ export function ProblemDetailPage() {
                   {session.username}
                 </p>
               </div>
-              <div className="w-9 h-9 rounded-full bg-linear-to-br from-primary to-secondary flex items-center justify-center text-body-sm font-bold text-on-primary shrink-0">
+              <div className="w-8 h-8 rounded-full bg-linear-to-br from-primary to-secondary flex items-center justify-center text-body-sm font-bold text-on-primary shrink-0">
                 {session.username[0]?.toUpperCase()}
               </div>
             </>
@@ -150,7 +137,7 @@ export function ProblemDetailPage() {
               {/* Wider invisible hit area */}
               <div className="absolute inset-y-0 -left-1.5 -right-1.5" />
               {/* Visual pill on hover */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-10 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-9 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
 
             {/* Right – Code Editor */}
@@ -159,7 +146,7 @@ export function ProblemDetailPage() {
               style={{ width: `${100 - leftWidth}%` }}
             >
               <div className="h-full">
-                <CodeEditorPanel problem={problem} sampleTestCases={sampleTestCases} />
+                <CodeEditorPanel problem={problem} sampleTestCases={problem.samples} />
               </div>
             </div>
           </div>
