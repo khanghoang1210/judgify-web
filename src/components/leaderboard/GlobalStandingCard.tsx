@@ -7,7 +7,7 @@ interface GlobalStandingCardProps {
 
 export function GlobalStandingCard({ data }: GlobalStandingCardProps) {
   return (
-    <div className="bg-surface-container rounded-xl border border-outline-variant p-6 flex flex-col gap-4">
+    <div className="bg-surface-container rounded-xl border border-outline-variant p-4 flex flex-col gap-4">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
@@ -18,7 +18,7 @@ export function GlobalStandingCard({ data }: GlobalStandingCardProps) {
             Your performance across all competitive segments.
           </p>
         </div>
-        <Trophy size={18} className="text-on-surface-variant shrink-0 mt-0.5" />
+        <Trophy size={16} className="text-on-surface-variant shrink-0 mt-0.5" />
       </div>
 
       {/* Rank */}

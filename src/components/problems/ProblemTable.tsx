@@ -80,12 +80,12 @@ export function ProblemTable({
             }`}
           >
             {/* Status */}
-            <div className="px-3 py-5 flex items-center justify-center">
+            <div className="px-3 py-4 flex items-center justify-center">
               <StatusIcon status={problem.status} />
             </div>
 
             {/* Title */}
-            <div className="px-4 py-5">
+            <div className="px-4 py-4">
               <Link
                 to={`/problems/${problem.slug}`}
                 className="text-body-sm font-medium text-on-surface hover:text-primary transition-colors"
@@ -95,19 +95,19 @@ export function ProblemTable({
             </div>
 
             {/* Difficulty */}
-            <div className="px-4 py-5">
+            <div className="px-4 py-4">
               <DifficultyBadge difficulty={problem.difficulty} />
             </div>
 
             {/* Acceptance */}
-            <div className="px-4 py-5">
+            <div className="px-4 py-4">
               <span className="text-code-md text-on-surface-variant font-jetbrains-mono">
                 {problem.acceptance == null ? "—" : `${problem.acceptance}%`}
               </span>
             </div>
 
             {/* Last Submitted */}
-            <div className="px-4 py-5 text-right">
+            <div className="px-4 py-4 text-right">
               <span className="text-body-sm text-on-surface-variant whitespace-nowrap">
                 {timeAgo(problem.lastSubmitted)}
               </span>
@@ -116,7 +116,7 @@ export function ProblemTable({
         ))}
 
         {problems.length === 0 && (
-          <div className="px-6 py-12 text-center text-body-sm text-on-surface-variant bg-surface-container">
+          <div className="px-4 py-8 text-center text-body-sm text-on-surface-variant bg-surface-container">
             No problems match your filters.
           </div>
         )}

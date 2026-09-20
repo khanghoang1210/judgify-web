@@ -67,7 +67,7 @@ export function SubmissionResultPage() {
   const problemHref = problemSlug ? `/problems/${problemSlug}` : "/problems";
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header & breadcrumbs */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
@@ -96,16 +96,16 @@ export function SubmissionResultPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(problemHref)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface hover:border-primary transition-all text-body-sm"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-high border border-outline-variant text-on-surface hover:border-primary transition-all text-body-sm"
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={18} />
             Back to problem
           </button>
           <button
             onClick={() => navigate(problemHref)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-on-primary font-semibold hover:bg-primary-container transition-all text-body-sm"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary text-on-primary font-semibold hover:bg-primary-container transition-all text-body-sm"
           >
-            <RefreshCw size={20} />
+            <RefreshCw size={18} />
             Try again
           </button>
         </div>
@@ -117,21 +117,21 @@ export function SubmissionResultPage() {
         onRetry={submissionState.reload}
       >
         {detail && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {/* Left column */}
-            <div className="lg:col-span-8 space-y-6">
+            <div className="lg:col-span-8 space-y-4">
               <SubmissionStatusBanner submission={detail} />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <PerformanceStatCard
                   label="Runtime"
                   value={detail.runtime}
-                  icon={<Clock size={22} />}
+                  icon={<Clock size={18} />}
                 />
                 <PerformanceStatCard
                   label="Memory Usage"
                   value={detail.memory}
-                  icon={<Cpu size={22} />}
+                  icon={<Cpu size={18} />}
                 />
               </div>
 
@@ -139,7 +139,7 @@ export function SubmissionResultPage() {
                 The API's submission resource does not return `sourceCode`, so the
                 submitted code cannot be shown back to the user yet.
               */}
-              <div className="bg-surface-container border border-outline-variant rounded-xl p-6">
+              <div className="bg-surface-container border border-outline-variant rounded-xl p-4">
                 <p className="text-label-caps uppercase font-jetbrains-mono text-on-surface-variant mb-2">
                   Source file
                 </p>
@@ -153,7 +153,7 @@ export function SubmissionResultPage() {
             </div>
 
             {/* Side panel */}
-            <div className="lg:col-span-4 space-y-6">
+            <div className="lg:col-span-4 space-y-4">
               <TestCasesPanel submission={detail} />
             </div>
           </div>

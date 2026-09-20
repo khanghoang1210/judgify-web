@@ -20,7 +20,7 @@ export function Select({
       <select
         value={value}
         onChange={(e) => onValueChange(e.target.value)}
-        className="appearance-none bg-surface-container-high border border-outline-variant text-on-surface text-body-sm pl-3 pr-8 py-2 rounded-md cursor-pointer focus:outline-none focus:border-primary transition-colors w-full"
+        className="appearance-none bg-surface-container-high border border-outline-variant text-on-surface text-body-sm pl-2.5 pr-7 py-1.5 rounded-md cursor-pointer focus:outline-none focus:border-primary transition-colors w-full"
       >
         {placeholder && (
           <option value="" disabled>

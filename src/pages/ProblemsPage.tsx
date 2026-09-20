@@ -68,7 +68,7 @@ export function ProblemsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Page header */}
       <div className="flex items-start justify-between gap-4">
         <div>
@@ -98,7 +98,7 @@ export function ProblemsPage() {
         empty={problems.length === 0}
         emptyMessage="No published problems yet."
       >
-        <div className="space-y-6">
+        <div className="space-y-4">
           <ProblemStatsRow {...stats} />
 
           {!session && (

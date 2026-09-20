@@ -7,8 +7,8 @@ interface ProfileHeaderProps {
 
 export function ProfileHeader({ user }: ProfileHeaderProps) {
   return (
-    <div className="bg-surface-container rounded-xl border border-outline-variant p-6">
-      <div className="flex items-start gap-6">
+    <div className="bg-surface-container rounded-xl border border-outline-variant p-4">
+      <div className="flex items-start gap-4">
         {/* Avatar */}
         <div className="w-28 h-28 rounded-xl shrink-0 bg-linear-to-br from-primary-container via-secondary-container to-tertiary-container flex items-center justify-center border border-outline-variant">
           <span className="text-display-lg font-bold font-geist text-on-surface">
@@ -20,7 +20,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
         <div className="flex-1 min-w-0">
           {/* Name row */}
           <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-3xl font-bold font-geist text-on-surface">
+            <h1 className="text-2xl font-bold font-geist text-on-surface">
               {user.username}
             </h1>
             <span className="px-2.5 py-1 text-label-caps font-bold rounded-full bg-primary-container text-on-surface font-jetbrains-mono uppercase inline-flex items-center gap-1">
@@ -34,9 +34,9 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
           </div>
 
           {/* Stat blocks — every value comes from your submission history. */}
-          <div className="mt-6 grid grid-cols-3 gap-3">
+          <div className="mt-4 grid grid-cols-3 gap-3">
             <div className="bg-surface-container-high rounded-lg p-4 text-center border border-outline-variant">
-              <div className="text-3xl font-bold font-geist text-tertiary">
+              <div className="text-2xl font-bold font-geist text-tertiary">
                 {user.stats.problemsSolved}
               </div>
               <div className="text-label-caps text-on-surface-variant font-jetbrains-mono mt-1 uppercase">
@@ -44,7 +44,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
               </div>
             </div>
             <div className="bg-surface-container-high rounded-lg p-4 text-center border border-outline-variant">
-              <div className="text-3xl font-bold font-geist text-on-surface">
+              <div className="text-2xl font-bold font-geist text-on-surface">
                 {user.stats.totalSubmissions.toLocaleString()}
               </div>
               <div className="text-label-caps text-on-surface-variant font-jetbrains-mono mt-1 uppercase">
@@ -52,7 +52,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
               </div>
             </div>
             <div className="bg-surface-container-high rounded-lg p-4 text-center border border-outline-variant">
-              <div className="text-3xl font-bold font-geist text-on-surface">
+              <div className="text-2xl font-bold font-geist text-on-surface">
                 {user.stats.acceptance}%
               </div>
               <div className="text-label-caps text-on-surface-variant font-jetbrains-mono mt-1 uppercase">

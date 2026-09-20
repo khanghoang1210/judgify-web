@@ -11,7 +11,7 @@ export function DashboardHeader({ userName, streakDays, signedIn }: DashboardHea
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
-        <h1 className="text-3xl font-bold font-geist text-on-background">
+        <h1 className="text-2xl font-bold font-geist text-on-background">
           {signedIn ? `Welcome back, ${userName}!` : "Welcome to Judgify"}
         </h1>
         <p className="text-on-surface-variant mt-1">
@@ -26,16 +26,16 @@ export function DashboardHeader({ userName, streakDays, signedIn }: DashboardHea
       <div className="flex items-center gap-3">
         <Link
           to="/submissions"
-          className="px-5 py-2.5 rounded-md bg-surface-container-high border border-outline-variant hover:bg-surface-bright transition-colors text-on-surface font-semibold inline-flex items-center gap-2"
+          className="px-3.5 py-1.5 rounded-md bg-surface-container-high border border-outline-variant hover:bg-surface-bright transition-colors text-on-surface font-semibold inline-flex items-center gap-2"
         >
-          <ListChecks size={18} />
+          <ListChecks size={16} />
           Submissions
         </Link>
         <Link
           to="/problems"
-          className="px-5 py-2.5 rounded-md bg-primary text-on-primary hover:opacity-90 transition-opacity font-semibold inline-flex items-center gap-2 shadow-lg shadow-primary/20"
+          className="px-3.5 py-1.5 rounded-md bg-primary text-on-primary hover:opacity-90 transition-opacity font-semibold inline-flex items-center gap-2 shadow-lg shadow-primary/20"
         >
-          <Play size={18} />
+          <Play size={16} />
           Start Coding
         </Link>
       </div>

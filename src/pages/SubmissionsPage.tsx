@@ -58,10 +58,10 @@ export function SubmissionsPage() {
   }, [myRows]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold font-geist text-on-surface">
+        <h1 className="text-2xl font-bold font-geist text-on-surface">
           Submissions
         </h1>
         <p className="text-on-surface-variant mt-1">
@@ -70,13 +70,13 @@ export function SubmissionsPage() {
       </div>
 
       <AsyncBoundary loading={loading} error={error} onRetry={reload}>
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="bg-surface-container-high rounded-xl border border-outline-variant p-5"
+                className="bg-surface-container-high rounded-xl border border-outline-variant p-4"
               >
                 <p className="text-label-caps uppercase font-jetbrains-mono text-on-surface-variant">
                   {stat.label}

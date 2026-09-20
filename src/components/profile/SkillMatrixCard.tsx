@@ -51,7 +51,7 @@ export function SkillMatrixCard({ skills }: SkillMatrixCardProps) {
   const n = skills.length;
 
   return (
-    <div className="bg-surface-container rounded-xl border border-outline-variant p-5">
+    <div className="bg-surface-container rounded-xl border border-outline-variant p-4">
       <h3 className="text-body-md font-semibold font-geist text-on-surface mb-2">
         Skill Matrix
       </h3>

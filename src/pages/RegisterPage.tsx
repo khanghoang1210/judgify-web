@@ -37,7 +37,7 @@ export function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-6 py-12 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 py-8 relative overflow-hidden">
       {/* Background decoration */}
       <div className="pointer-events-none absolute left-8 bottom-8 select-none overflow-hidden">
         <div className="flex flex-col text-right font-jetbrains-mono text-[7rem] md:text-[10rem] lg:text-[12rem] font-bold uppercase leading-[0.9] tracking-[0.25em] text-outline-variant/15">
@@ -51,8 +51,8 @@ export function RegisterPage() {
       <div className="flex items-center gap-20 w-full max-w-5xl relative z-10">
         {/* Branding */}
         <div className="hidden lg:flex flex-col flex-1 min-w-0">
-          <div className="flex items-center gap-4 mb-6">
-            <TerminalIcon size={48} className="text-primary bg-primary-container rounded-lg p-1" />
+          <div className="flex items-center gap-4 mb-4">
+            <TerminalIcon size={40} className="text-primary bg-primary-container rounded-lg p-1" />
             <h1 className="text-display-lg font-bold font-geist text-on-surface">
               Judgify
             </h1>
@@ -66,9 +66,9 @@ export function RegisterPage() {
         {/* Form card */}
         <div className="w-full max-w-110 shrink-0">
           {/* Mobile branding */}
-          <div className="lg:hidden mb-8 text-center">
+          <div className="lg:hidden mb-6 text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
+              <div className="w-9 h-9 bg-primary-container rounded-lg flex items-center justify-center">
                 <span className="text-primary font-jetbrains-mono font-bold text-sm">
                   {">_"}
                 </span>
@@ -79,12 +79,12 @@ export function RegisterPage() {
             </div>
           </div>
 
-          <div className="bg-surface-container rounded-2xl border border-outline-variant/60 p-10">
-            <h2 className="text-headline-md font-semibold font-geist text-on-surface mb-6">
+          <div className="bg-surface-container rounded-xl border border-outline-variant/60 p-6">
+            <h2 className="text-headline-md font-semibold font-geist text-on-surface mb-4">
               Create your account
             </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Username */}
               <div>
                 <label className="block text-body-sm font-medium text-on-surface mb-2">
@@ -92,7 +92,7 @@ export function RegisterPage() {
                 </label>
                 <div className="relative">
                   <User
-                    size={18}
+                    size={16}
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
                   />
                   <input
@@ -101,7 +101,7 @@ export function RegisterPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, username: e.target.value })
                     }
-                    className="w-full h-11 pl-10 pr-4 bg-surface-container-high border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
+                    className="w-full h-10 pl-10 pr-4 bg-surface-container-high border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
                     autoComplete="username"
                     minLength={3}
                     maxLength={50}
@@ -120,7 +120,7 @@ export function RegisterPage() {
                 </label>
                 <div className="relative">
                   <Mail
-                    size={18}
+                    size={16}
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
                   />
                   <input
@@ -129,7 +129,7 @@ export function RegisterPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full h-11 pl-10 pr-4 bg-surface-container-high border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
+                    className="w-full h-10 pl-10 pr-4 bg-surface-container-high border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
                     placeholder="you@example.com"
                     required
                   />
@@ -143,7 +143,7 @@ export function RegisterPage() {
                 </label>
                 <div className="relative">
                   <Lock
-                    size={18}
+                    size={16}
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
                   />
                   <input
@@ -152,7 +152,7 @@ export function RegisterPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
-                    className="w-full h-11 pl-10 pr-10 bg-surface-container-high border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
+                    className="w-full h-10 pl-10 pr-10 bg-surface-container-high border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
                     autoComplete="new-password"
                     minLength={8}
                     placeholder="Create a strong password"
@@ -163,7 +163,7 @@ export function RegisterPage() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface transition-colors"
                   >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
                 <p className="text-code-sm text-on-surface-variant mt-1.5">
@@ -210,7 +210,7 @@ export function RegisterPage() {
               </div>
 
               {error && (
-                <p className="text-body-sm text-error bg-error-container/20 border border-error/30 rounded-md px-3 py-2">
+                <p className="text-body-sm text-error bg-error-container/20 border border-error/30 rounded-md px-2.5 py-1.5">
                   {error}
                 </p>
               )}
@@ -219,7 +219,7 @@ export function RegisterPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full h-11 bg-primary-container text-on-primary-container font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full h-10 bg-primary-container text-on-primary-container font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {submitting ? <Loader2 size={16} className="animate-spin" /> : null}
                 {submitting ? "Creating account…" : "Create Account"}
@@ -256,7 +256,7 @@ export function RegisterPage() {
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
-                  className="h-11 bg-surface-container-high border border-outline-variant rounded-lg hover:bg-surface-container-highest transition-colors flex items-center justify-center gap-2 text-body-sm font-medium text-on-surface"
+                  className="h-10 bg-surface-container-high border border-outline-variant rounded-lg hover:bg-surface-container-highest transition-colors flex items-center justify-center gap-2 text-body-sm font-medium text-on-surface"
                 >
                   <svg
                     width="20"
@@ -270,7 +270,7 @@ export function RegisterPage() {
                 </button>
                 <button
                   type="button"
-                  className="h-11 bg-surface-container-high border border-outline-variant rounded-lg hover:bg-surface-container-highest transition-colors flex items-center justify-center gap-2 text-body-sm font-medium text-on-surface"
+                  className="h-10 bg-surface-container-high border border-outline-variant rounded-lg hover:bg-surface-container-highest transition-colors flex items-center justify-center gap-2 text-body-sm font-medium text-on-surface"
                 >
                   <svg width="20" height="20" viewBox="0 0 20 20">
                     <path
@@ -296,7 +296,7 @@ export function RegisterPage() {
             </form>
 
             {/* Sign in link */}
-            <p className="text-body-sm text-on-surface-variant text-center mt-6">
+            <p className="text-body-sm text-on-surface-variant text-center mt-4">
               Already have an account?{" "}
               <button
                 onClick={() => navigate("/login")}

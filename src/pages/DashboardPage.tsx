@@ -81,7 +81,7 @@ export function DashboardPage() {
   );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <DashboardHeader
         userName={session?.username ?? "guest"}
         streakDays={stats.streakDays}
@@ -95,15 +95,15 @@ export function DashboardPage() {
         empty={problems.length === 0}
         emptyMessage="No published problems yet — seed the backend to get started."
       >
-        <div className="space-y-8">
+        <div className="space-y-6">
           {/* Daily challenge + progress summary */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {challenge && <DailyChallengeCard challenge={challenge} />}
             <ProgressSummaryGrid stats={stats} />
           </div>
 
           {/* Topic mastery is gone: the API has no tags or topics on problems. */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="lg:col-span-2">
               <RecentSubmissionsCard submissions={recent} />
             </div>

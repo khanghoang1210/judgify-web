@@ -51,45 +51,45 @@ colors:
 typography:
   display-lg:
     fontFamily: Geist
-    fontSize: 48px
+    fontSize: 36px
     fontWeight: '700'
-    lineHeight: 56px
+    lineHeight: 40px
     letterSpacing: -0.02em
   headline-md:
     fontFamily: Geist
-    fontSize: 24px
+    fontSize: 20px
     fontWeight: '600'
-    lineHeight: 32px
+    lineHeight: 28px
   headline-sm:
     fontFamily: Geist
-    fontSize: 18px
+    fontSize: 15px
     fontWeight: '600'
-    lineHeight: 24px
+    lineHeight: 22px
   body-md:
-    fontFamily: Inter
-    fontSize: 16px
-    fontWeight: '400'
-    lineHeight: 24px
-  body-sm:
     fontFamily: Inter
     fontSize: 14px
     fontWeight: '400'
     lineHeight: 20px
-  code-md:
-    fontFamily: JetBrains Mono
-    fontSize: 14px
-    fontWeight: '400'
-    lineHeight: 22px
-  code-sm:
-    fontFamily: JetBrains Mono
-    fontSize: 12px
+  body-sm:
+    fontFamily: Inter
+    fontSize: 13px
     fontWeight: '400'
     lineHeight: 18px
-  label-caps:
+  code-md:
+    fontFamily: JetBrains Mono
+    fontSize: 13px
+    fontWeight: '400'
+    lineHeight: 20px
+  code-sm:
     fontFamily: JetBrains Mono
     fontSize: 11px
-    fontWeight: '600'
+    fontWeight: '400'
     lineHeight: 16px
+  label-caps:
+    fontFamily: JetBrains Mono
+    fontSize: 10px
+    fontWeight: '600'
+    lineHeight: 14px
     letterSpacing: 0.05em
 rounded:
   sm: 0.25rem
@@ -101,7 +101,7 @@ rounded:
 spacing:
   unit: 4px
   container-max-width: 1440px
-  gutter: 24px
+  gutter: 16px
   margin-mobile: 16px
   margin-desktop: 32px
   panel-gap: 1px

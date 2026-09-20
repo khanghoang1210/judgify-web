@@ -33,7 +33,7 @@ export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
               ].map((head) => (
                 <th
                   key={head}
-                  className="px-6 py-3 text-label-caps uppercase font-jetbrains-mono text-on-surface-variant"
+                  className="px-4 py-3 text-label-caps uppercase font-jetbrains-mono text-on-surface-variant"
                 >
                   {head}
                 </th>
@@ -47,7 +47,7 @@ export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
                 onClick={() => navigate(`/submissions/${submission.id}`)}
                 className="hover:bg-surface-container-high transition-colors cursor-pointer"
               >
-                <td className="px-6 py-4">
+                <td className="px-4 py-3">
                   <div className="flex flex-col">
                     <span className="font-semibold text-on-surface">
                       {submission.problemTitle}
@@ -59,19 +59,19 @@ export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
                     </span>
                   </div>
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-4 py-3">
                   <StatusBadge status={submission.status} />
                 </td>
-                <td className="px-6 py-4 text-code-md font-jetbrains-mono text-on-surface-variant">
+                <td className="px-4 py-3 text-code-md font-jetbrains-mono text-on-surface-variant">
                   {submission.runtime}
                 </td>
-                <td className="px-6 py-4 text-code-md font-jetbrains-mono text-on-surface-variant">
+                <td className="px-4 py-3 text-code-md font-jetbrains-mono text-on-surface-variant">
                   {submission.memory}
                 </td>
-                <td className="px-6 py-4 text-code-md font-jetbrains-mono text-on-surface-variant">
+                <td className="px-4 py-3 text-code-md font-jetbrains-mono text-on-surface-variant">
                   {LANGUAGE_LABELS[submission.language]}
                 </td>
-                <td className="px-6 py-4 text-body-sm text-on-surface-variant">
+                <td className="px-4 py-3 text-body-sm text-on-surface-variant">
                   {timeAgo(submission.submittedAt)}
                 </td>
               </tr>
@@ -81,7 +81,7 @@ export function SubmissionsTable({ submissions }: SubmissionsTableProps) {
       </div>
 
       {submissions.length === 0 && (
-        <div className="px-6 py-12 text-center text-on-surface-variant">
+        <div className="px-4 py-8 text-center text-on-surface-variant">
           No submissions match your filters.
         </div>
       )}

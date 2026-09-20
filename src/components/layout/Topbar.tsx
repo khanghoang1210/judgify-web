@@ -7,25 +7,25 @@ export function Topbar() {
   const { session, signOut } = useAuth();
 
   return (
-    <header className="h-16 bg-background border-b border-outline-variant flex items-center gap-4 px-6">
+    <header className="h-14 bg-background border-b border-outline-variant flex items-center gap-3 px-4">
       {/* Search bar */}
       <div className="flex-1 max-w-lg relative">
         <Search
-          size={15}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
+          size={14}
+          className="absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant"
         />
         <input
           type="text"
           placeholder="Search problems, topics..."
-          className="w-full h-9 pl-9 pr-4 bg-surface-container border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
+          className="w-full h-8 pl-8 pr-3 bg-surface-container border border-outline-variant rounded-md text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
         />
       </div>
 
       {/* Right side */}
       <div className="flex items-center gap-3 ml-auto">
         {/* Notification bell */}
-        <button className="w-9 h-9 flex items-center justify-center rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative">
-          <Bell size={18} />
+        <button className="w-8 h-8 flex items-center justify-center rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative">
+          <Bell size={16} />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
         </button>
 
@@ -39,7 +39,7 @@ export function Topbar() {
                 {session.username}
               </p>
             </div>
-            <div className="w-9 h-9 rounded-full bg-linear-to-br from-primary to-secondary flex items-center justify-center text-body-sm font-bold text-on-primary shrink-0">
+            <div className="w-8 h-8 rounded-full bg-linear-to-br from-primary to-secondary flex items-center justify-center text-body-sm font-bold text-on-primary shrink-0">
               {session.username[0]?.toUpperCase()}
             </div>
             <button
@@ -48,22 +48,22 @@ export function Topbar() {
                 navigate("/login");
               }}
               title="Sign out"
-              className="w-9 h-9 flex items-center justify-center rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
             >
-              <LogOut size={18} />
+              <LogOut size={16} />
             </button>
           </div>
         ) : (
           <div className="flex items-center gap-2">
             <button
               onClick={() => navigate("/login")}
-              className="px-4 py-2 rounded-md border border-outline-variant text-body-sm text-on-surface hover:border-primary transition-colors"
+              className="px-3 py-1.5 rounded-md border border-outline-variant text-body-sm text-on-surface hover:border-primary transition-colors"
             >
               Sign in
             </button>
             <button
               onClick={() => navigate("/register")}
-              className="px-4 py-2 rounded-md bg-primary-container text-on-primary-container text-body-sm font-semibold hover:opacity-90 transition-opacity"
+              className="px-3 py-1.5 rounded-md bg-primary-container text-on-primary-container text-body-sm font-semibold hover:opacity-90 transition-opacity"
             >
               Register
             </button>

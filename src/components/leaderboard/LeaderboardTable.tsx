@@ -65,7 +65,7 @@ export function LeaderboardTable({
         return (
           <div
             key={entry.userId}
-            className={`grid grid-cols-[56px_40px_minmax(160px,1fr)_80px_minmax(130px,160px)_90px_72px] items-center px-4 py-3.5 border-b border-outline-variant last:border-b-0 transition-colors ${
+            className={`grid grid-cols-[56px_40px_minmax(160px,1fr)_80px_minmax(130px,160px)_90px_72px] items-center px-4 py-2.5 border-b border-outline-variant last:border-b-0 transition-colors ${
               isCurrentUser
                 ? "bg-primary-container/10 hover:bg-primary-container/15"
                 : "hover:bg-surface-container-high"
@@ -124,7 +124,7 @@ export function LeaderboardTable({
                   }}
                 />
               </div>
-              <span className="text-code-sm text-on-surface-variant font-jetbrains-mono shrink-0 w-10 text-right">
+              <span className="text-code-sm text-on-surface-variant font-jetbrains-mono shrink-0 w-9 text-right">
                 {entry.acceptance.toFixed(1)}%
               </span>
             </div>
@@ -145,7 +145,7 @@ export function LeaderboardTable({
       })}
 
       {/* Footer */}
-      <div className="flex items-center justify-between px-5 py-3.5 bg-surface-container-low border-t border-outline-variant">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-surface-container-low border-t border-outline-variant">
         <span className="text-code-sm text-on-surface-variant font-jetbrains-mono">
           Showing top {showing} of {totalCompetitors.toLocaleString()}{" "}
           competitors

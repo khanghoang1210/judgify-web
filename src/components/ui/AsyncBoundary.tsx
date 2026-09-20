@@ -25,7 +25,7 @@ export function AsyncBoundary({
   if (loading) {
     return (
       <div className={WRAPPER}>
-        <Loader2 size={28} className="text-primary animate-spin" />
+        <Loader2 size={24} className="text-primary animate-spin" />
         <p className="text-body-sm text-on-surface-variant">Loading…</p>
       </div>
     );
@@ -34,12 +34,12 @@ export function AsyncBoundary({
   if (error) {
     return (
       <div className={WRAPPER}>
-        <AlertTriangle size={28} className="text-error" />
+        <AlertTriangle size={24} className="text-error" />
         <p className="text-body-sm text-on-surface">{error}</p>
         {onRetry && (
           <button
             onClick={onRetry}
-            className="px-4 py-2 rounded-md bg-surface-container-high border border-outline-variant text-body-sm text-on-surface hover:border-primary transition-colors"
+            className="px-3 py-1.5 rounded-md bg-surface-container-high border border-outline-variant text-body-sm text-on-surface hover:border-primary transition-colors"
           >
             Try again
           </button>

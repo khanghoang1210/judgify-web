@@ -15,7 +15,7 @@ const ICON_MAP = {
 
 export function AchievementBadgesCard({ badges }: AchievementBadgesCardProps) {
   return (
-    <div className="bg-surface-container rounded-xl border border-outline-variant p-5">
+    <div className="bg-surface-container rounded-xl border border-outline-variant p-4">
       <h3 className="text-body-md font-semibold font-geist text-on-surface mb-4">
         Achievement Badges
       </h3>
@@ -32,13 +32,13 @@ export function AchievementBadgesCard({ badges }: AchievementBadgesCardProps) {
                 }`}
               >
                 <Icon
-                  size={22}
+                  size={18}
                   className={
                     badge.earned ? "text-primary" : "text-on-surface-variant"
                   }
                 />
               </div>
-              <span className="text-label-caps text-on-surface-variant text-center font-jetbrains-mono uppercase tracking-wide leading-tight max-w-16">
+              <span className="text-label-caps text-on-surface-variant text-center font-jetbrains-mono uppercase tracking-wide leading-tight max-w-14">
                 {badge.name}
               </span>
             </div>

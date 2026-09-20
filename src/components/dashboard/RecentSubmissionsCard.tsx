@@ -20,7 +20,7 @@ export function RecentSubmissionsCard({ submissions }: RecentSubmissionsCardProp
 
   return (
     <div className="bg-surface-container-low rounded-lg border border-outline-variant overflow-hidden">
-      <div className="px-6 py-5 border-b border-outline-variant flex items-center justify-between">
+      <div className="px-4 py-4 border-b border-outline-variant flex items-center justify-between">
         <h3 className="text-headline-sm font-semibold font-geist text-on-surface">
           Recent Submissions
         </h3>
@@ -34,7 +34,7 @@ export function RecentSubmissionsCard({ submissions }: RecentSubmissionsCardProp
       </div>
 
       {submissions.length === 0 ? (
-        <p className="px-6 py-10 text-center text-body-sm text-on-surface-variant">
+        <p className="px-4 py-8 text-center text-body-sm text-on-surface-variant">
           No submissions yet. Pick a problem and ship something.
         </p>
       ) : (
@@ -45,7 +45,7 @@ export function RecentSubmissionsCard({ submissions }: RecentSubmissionsCardProp
                 {["Problem", "Status", "Runtime", "Language", "Time"].map((head) => (
                   <th
                     key={head}
-                    className="px-6 py-3 text-label-caps uppercase font-jetbrains-mono text-on-surface-variant"
+                    className="px-4 py-3 text-label-caps uppercase font-jetbrains-mono text-on-surface-variant"
                   >
                     {head}
                   </th>
@@ -59,7 +59,7 @@ export function RecentSubmissionsCard({ submissions }: RecentSubmissionsCardProp
                   onClick={() => navigate(`/submissions/${submission.id}`)}
                   className="hover:bg-surface-container-high transition-colors cursor-pointer"
                 >
-                  <td className="px-6 py-4">
+                  <td className="px-4 py-3">
                     <div className="flex flex-col">
                       <span className="font-semibold text-on-surface truncate max-w-55">
                         {submission.problemTitle}
@@ -69,16 +69,16 @@ export function RecentSubmissionsCard({ submissions }: RecentSubmissionsCardProp
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-4">
-                    <StatusBadge status={submission.status} size={18} />
+                  <td className="px-4 py-3">
+                    <StatusBadge status={submission.status} size={16} />
                   </td>
-                  <td className="px-6 py-4 text-code-md font-jetbrains-mono text-on-surface-variant">
+                  <td className="px-4 py-3 text-code-md font-jetbrains-mono text-on-surface-variant">
                     {submission.runtime}
                   </td>
-                  <td className="px-6 py-4 text-code-md font-jetbrains-mono text-on-surface-variant">
+                  <td className="px-4 py-3 text-code-md font-jetbrains-mono text-on-surface-variant">
                     {LANGUAGE_LABELS[submission.language]}
                   </td>
-                  <td className="px-6 py-4 text-body-sm text-on-surface-variant">
+                  <td className="px-4 py-3 text-body-sm text-on-surface-variant">
                     {timeAgo(submission.submittedAt)}
                   </td>
                 </tr>

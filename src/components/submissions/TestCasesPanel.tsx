@@ -12,8 +12,8 @@ export function TestCasesPanel({ submission }: TestCasesPanelProps) {
   const allPassed = testCasesTotal > 0 && testCasesPassed === testCasesTotal;
 
   return (
-    <div className="bg-surface-container border border-outline-variant rounded-xl p-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="bg-surface-container border border-outline-variant rounded-xl p-4">
+      <div className="flex items-center justify-between mb-4">
         <h3 className="text-headline-sm font-semibold font-geist text-on-surface">
           Test Cases
         </h3>
@@ -50,7 +50,7 @@ export function TestCasesPanel({ submission }: TestCasesPanelProps) {
         </div>
       )}
 
-      <div className="mt-6 pt-6 border-t border-outline-variant space-y-3">
+      <div className="mt-4 pt-6 border-t border-outline-variant space-y-3">
         <div className="flex justify-between text-body-sm">
           <span className="text-on-surface-variant">Time Limit</span>
           <span className="text-on-surface font-semibold">{timeLimit}</span>

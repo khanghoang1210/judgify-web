@@ -44,18 +44,18 @@ export function ProfilePage() {
   return (
     <AsyncBoundary loading={loading} error={error} onRetry={reload}>
       {user && (
-        <div className="space-y-6">
+        <div className="space-y-4">
           <ProfileHeader user={user} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-4">
             {/* Left column */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4">
               <CodingActivityCard data={activity} totalSubmissions={mine.length} />
               <RecentActivityCard items={recent} />
             </div>
 
             {/* Right column — skills and badges have no API yet, see data/placeholders.ts */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4">
               <ProblemsBreakdownCard data={breakdown} />
               <SkillMatrixCard skills={skillScores} />
               <AchievementBadgesCard badges={achievementBadges} />

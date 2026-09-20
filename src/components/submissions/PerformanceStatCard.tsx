@@ -12,7 +12,7 @@ interface PerformanceStatCardProps {
  */
 export function PerformanceStatCard({ label, value, icon }: PerformanceStatCardProps) {
   return (
-    <div className="bg-surface-container border border-outline-variant rounded-xl p-6 relative group overflow-hidden">
+    <div className="bg-surface-container border border-outline-variant rounded-xl p-4 relative group overflow-hidden">
       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
       <div className="flex justify-between items-start relative z-10 gap-3">
         <div>

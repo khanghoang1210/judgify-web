@@ -10,11 +10,11 @@ export function DailyChallengeCard({ challenge }: DailyChallengeCardProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="lg:col-span-2 group relative overflow-hidden rounded-lg border border-outline-variant bg-surface-container-low p-8 flex flex-col justify-between transition-all hover:border-primary/50">
+    <div className="lg:col-span-2 group relative overflow-hidden rounded-lg border border-outline-variant bg-surface-container-low p-5 flex flex-col justify-between transition-all hover:border-primary/50">
       <div className="absolute -right-16 -top-16 w-64 h-64 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors" />
 
       <div className="relative z-10">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4">
           <span className="px-3 py-1 rounded-full bg-secondary-container/20 text-secondary text-label-caps font-jetbrains-mono border border-secondary-container/30 inline-flex items-center gap-1">
             <Timer size={14} />
             DAILY CHALLENGE
@@ -37,27 +37,27 @@ export function DailyChallengeCard({ challenge }: DailyChallengeCardProps) {
 
         <div className="flex flex-wrap items-center gap-4 text-on-surface-variant">
           <span className="inline-flex items-center gap-1 text-tertiary">
-            <BarChart size={18} />
+            <BarChart size={16} />
             {challenge.difficulty}
           </span>
           {/* Distinct users with an accepted submission. */}
           <span className="inline-flex items-center gap-1">
-            <Users size={18} />
+            <Users size={16} />
             {challenge.solvedCount} solved
           </span>
         </div>
       </div>
 
-      <div className="relative z-10 mt-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+      <div className="relative z-10 mt-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <p className="text-on-surface-variant max-w-md text-body-sm">
           {challenge.description}
         </p>
         <button
           onClick={() => navigate(`/problems/${challenge.slug}`)}
-          className="shrink-0 bg-primary text-on-primary h-12 px-6 rounded-md font-bold hover:scale-105 transition-transform inline-flex items-center gap-2"
+          className="shrink-0 bg-primary text-on-primary h-12 px-4 rounded-md font-bold hover:scale-105 transition-transform inline-flex items-center gap-2"
         >
           Solve Now
-          <ArrowRight size={18} />
+          <ArrowRight size={16} />
         </button>
       </div>
     </div>

@@ -23,13 +23,13 @@ export function LeaderboardPage() {
   const visibleEntries = leaderboardEntries.slice(0, PAGE_SIZE);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Top row: Global Standing + placeholder stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px] gap-4">
         <GlobalStandingCard data={globalStanding} />
 
         {/* Right stats card */}
-        <div className="bg-surface-container rounded-xl border border-outline-variant p-6 flex flex-col justify-between gap-4">
+        <div className="bg-surface-container rounded-xl border border-outline-variant p-4 flex flex-col justify-between gap-4">
           <h3 className="text-body-md font-semibold font-geist text-on-surface">
             Your Stats
           </h3>

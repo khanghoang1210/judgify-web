@@ -37,13 +37,13 @@ export function ProblemsBreakdownCard({ data }: ProblemsBreakdownCardProps) {
   });
 
   return (
-    <div className="bg-surface-container rounded-xl border border-outline-variant p-5">
+    <div className="bg-surface-container rounded-xl border border-outline-variant p-4">
       <h3 className="text-body-md font-semibold font-geist text-on-surface mb-4">
         Problems Breakdown
       </h3>
 
       {/* Donut chart */}
-      <div className="flex justify-center mb-5">
+      <div className="flex justify-center mb-4">
         <svg width="180" height="180" viewBox="0 0 180 180">
           <g transform={`rotate(-90, ${cx}, ${cy})`}>
             {/* Background ring */}

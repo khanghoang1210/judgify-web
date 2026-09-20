@@ -12,7 +12,7 @@ export function RecentActivityCard({ items }: RecentActivityCardProps) {
   return (
     <div className="bg-surface-container rounded-xl border border-outline-variant">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-outline-variant">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-outline-variant">
         <h3 className="text-body-md font-semibold font-geist text-on-surface">
           Recent Activity
         </h3>
@@ -25,7 +25,7 @@ export function RecentActivityCard({ items }: RecentActivityCardProps) {
       </div>
 
       {items.length === 0 ? (
-        <p className="px-5 py-10 text-center text-body-sm text-on-surface-variant">
+        <p className="px-4 py-8 text-center text-body-sm text-on-surface-variant">
           No submissions yet.
         </p>
       ) : (
@@ -34,7 +34,7 @@ export function RecentActivityCard({ items }: RecentActivityCardProps) {
             <Link
               key={item.id}
               to={`/submissions/${item.id}`}
-              className={`flex items-center gap-4 px-5 py-4 ${
+              className={`flex items-center gap-4 px-4 py-3 ${
                 idx < items.length - 1 ? "border-b border-outline-variant" : ""
               } hover:bg-surface-container-high transition-colors`}
             >

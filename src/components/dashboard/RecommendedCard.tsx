@@ -23,7 +23,7 @@ export function RecommendedCard({ problems }: RecommendedCardProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-surface-container-low rounded-lg border border-outline-variant p-6">
+    <div className="bg-surface-container-low rounded-lg border border-outline-variant p-4">
       <h3 className="text-headline-sm font-semibold font-geist text-on-surface mb-4">
         Up next
       </h3>

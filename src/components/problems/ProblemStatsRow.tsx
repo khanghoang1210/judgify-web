@@ -65,7 +65,7 @@ export function ProblemStatsRow({
         return (
           <div
             key={stat.label}
-            className="bg-surface-container border border-outline-variant rounded-md px-5 py-4"
+            className="bg-surface-container border border-outline-variant rounded-md px-4 py-3"
           >
             <p className="text-label-caps text-on-surface-variant font-jetbrains-mono mb-2">
               {stat.label}
